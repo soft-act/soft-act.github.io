@@ -437,7 +437,6 @@
 
     <div id="mainNav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#overview">Overview</a>
         <a class="navbar-item" href="#abstract">Abstract</a>
         <a class="navbar-item" href="#method">Method</a>
         <a class="navbar-item" href="#evaluation">Evaluation</a>
@@ -462,8 +461,9 @@
       <div class="container has-text-centered">
         <div class="hero-teaser-content">
           <h1 class="title paper-title">Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies</h1>
-          <p class="author-list">Uksang Yoo*, Mengjia Zhu, Evan Pezent, Jom Preechayasomboon, Jean Oh, Jeffrey Ichnowski, Amir Memar, Ben Abbatematteo, Homanga Bharadhwaj, Ashish Deshpande, Harsha Prahlad</p>
-          <p class="affiliation-list">* Carnegie Mellon University (Robotics Institute), Meta</p>
+          <p class="author-list">Uksang Yoo<sup>1</sup>, Mengjia Zhu<sup>2</sup>, Evan Pezent<sup>2</sup>, Jom Preechayasomboon<sup>2</sup>, Jean Oh<sup>1</sup>, Jeffrey Ichnowski<sup>1</sup>, Amir Memar<sup>2</sup>, Ben Abbatematteo<sup>2</sup>, Homanga Bharadhwaj<sup>2</sup>, Ashish Deshpande<sup>2</sup>, Harsha Prahlad<sup>2</sup></p>
+          <p class="affiliation-list"><sup>1</sup> Carnegie Mellon University (Robotics Institute)</p>
+          <p class="affiliation-list"><sup>2</sup> Meta</p>
 
           <div class="link-buttons">
             <a class="button is-dark" href="assets/softact.pdf" target="_blank" rel="noopener noreferrer">
@@ -475,24 +475,6 @@
               <span>Supplemental (PDF)</span>
             </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="overview" class="section is-white-alt">
-    <div class="container" style="max-width: 900px;">
-      <h2 class="section-heading">System Overview</h2>
-      <div class="section-divider"></div>
-
-      <div class="card clean">
-        <div class="card-content content">
-          <p>
-            SoftAct is a contact- and force-centric framework for transferring human manipulation skills to non-anthropomorphic pneumatic soft robot hands. Instead of directly matching human joint motion, SoftAct uses virtual reality demonstrations with force labels and retargets behavior to preserve functional contact interactions.
-          </p>
-          <p>
-            The approach combines a two-stage force-aware retargeting process with a learned low-level pressure controller. This enables reliable policy execution despite severe embodiment mismatch between the human hand and a soft robotic hand.
-          </p>
         </div>
       </div>
     </div>
@@ -641,7 +623,7 @@
     var scrollBtn = document.getElementById("scroll-indicator-btn");
     if (scrollBtn) {
       scrollBtn.addEventListener("click", function() {
-        var target = document.getElementById("overview");
+        var target = document.getElementById("abstract");
         if (target) {
           target.scrollIntoView({ behavior: "smooth" });
         }
