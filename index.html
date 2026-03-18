@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A-SLIP: Acoustic Sensing for Continuous In-hand Slip Estimation</title>
+
+  <meta name="description" content="A-SLIP is a multi-channel acoustic sensing system for continuous in-hand slip estimation, predicting slip presence, direction, and magnitude in real time." />
+  <meta name="keywords" content="A-SLIP, acoustic sensing, slip estimation, in-hand manipulation, robotics, tactile sensing, piezoelectric microphones" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="A-SLIP: Acoustic Sensing for Continuous In-hand Slip Estimation" />
+  <meta property="og:description" content="Low-profile, multi-channel acoustic sensing for continuous slip vector estimation in robotic in-hand manipulation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://a-slip.github.io/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A-SLIP: Acoustic Sensing for Continuous In-hand Slip Estimation" />
+  <meta name="twitter:description" content="Multi-channel acoustic sensing for slip presence, direction, and magnitude estimation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Include MathJax -->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script type="text/javascript">
+  window.onload = function() {
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$']]
+      }
+    });
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+  };
+  </script>
+  <!-- Academic Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+
+  <style>
+    /* ── General ─────────────────────────────────────────────── */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 3.25rem;
+      overscroll-behavior-y: none;
+    }
+
+    body {
+      font-family: "Google Sans", "Segoe UI", Roboto, Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      overscroll-behavior-y: none;
+    }
+
+    .container {
+      width: 80%;
+    }
+
+    /* ── Page progress bar ───────────────────────────────────── */
+    .page-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(0,0,0,0.06);
+      z-index: 101;
+      pointer-events: none;
+    }
+    .page-progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #3273dc;
+      transition: width 0.08s ease-out;
+    }
+
+    /* ── Navbar ──────────────────────────────────────────────── */
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .navbar-item { font-weight: 500; color: #333 !important; transition: color 0.2s ease; }
+    .navbar-item:hover { color: #3273dc !important; }
+    .navbar-item.is-active-section { color: #3273dc !important; }
+    .navbar.navbar-over-video {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+    .navbar.navbar-over-video .navbar-item { color: rgba(255,255,255,0.9) !important; }
+    .navbar.navbar-over-video .navbar-item:hover { color: #3273dc !important; }
+    .navbar.navbar-over-video .navbar-burger span { background-color: #fff; }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .hero-teaser-wrap {
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background: #000;
+    }
+    .hero-teaser-wrap .teaser-video-bg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1800px;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-teaser-wrap .teaser-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.4) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-teaser-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.4) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-teaser-wrap .hero-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      padding: 2.5rem 1.5rem 5rem;
+      width: 100%;
+      transition: opacity 0.12s ease-out;
+    }
+    .hero-teaser-wrap .hero-teaser-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-teaser-wrap .title.paper-title { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); margin-bottom: 0.5rem; }
+    .hero-teaser-wrap .author-list { color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-top: 0.6rem; margin-bottom: 0.35rem; }
+    .hero-teaser-wrap .author-list a { color: #b8d4ff; }
+    .hero-teaser-wrap .author-list a:hover { color: #fff; text-decoration: underline; }
+    .hero-teaser-wrap .affiliation-list { color: rgba(255,255,255,0.9); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-top: 0.5rem; margin-bottom: 0.2rem; }
+    .hero-teaser-wrap .link-buttons { margin-top: 1.25rem; }
+    .hero-teaser-wrap .link-buttons .button { box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.12s ease-out;
+    }
+    .scroll-indicator:hover { color: #fff; }
+    .scroll-indicator-arrow {
+      animation: scroll-bounce 2s ease-in-out infinite;
+    }
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(6px); opacity: 0.7; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-teaser-wrap {
+        min-height: 100vh;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .hero-teaser-wrap .teaser-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        transform: none;
+      }
+      .hero-teaser-wrap .hero-body {
+        position: relative !important;
+        padding: 1.5rem 1rem 4rem;
+        padding-top: calc(3.25rem + 1rem);
+      }
+      .hero-teaser-wrap .title.paper-title { font-size: 1.4rem; }
+      .hero-teaser-wrap .author-list { font-size: 0.85rem; margin-bottom: 0.25rem; }
+      .hero-teaser-wrap .affiliation-list { font-size: 0.78rem; }
+      .hero-teaser-wrap .link-buttons .button { font-size: 0.8rem; padding: 0.4em 0.8em; margin: 0.2rem; }
+    }
+
+    .title.paper-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #1a1a2e;
+    }
+
+    .author-list { 
+      font-size: 1.05rem; 
+      margin-bottom: 0.5rem; 
+      color: #4a4a4a;
+    }
+    .author-list a { color: #3273dc; text-decoration: none; }
+    .author-list a:hover { text-decoration: underline; }
+
+    .affiliation-list { 
+      font-size: 0.95rem; 
+      color: #555; 
+    }
+
+    /* ── Buttons ─────────────────────────────────────────────── */
+    .link-buttons { margin-top: 1.5rem; }
+    .link-buttons .button {
+      margin: 0.3rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ── Section headings ────────────────────────────────────── */
+    .section-heading {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: #3273dc;
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    /* ── Abstract ────────────────────────────────────────────── */
+    .abstract-box {
+      background: #f7f9fc;
+      border-left: 4px solid #3273dc;
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 1rem;
+      line-height: 1.75;
+      text-align: justify;
+    }
+
+    /* ── Media containers ────────────────────────────────────── */
+    .media-container {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .media-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+    .media-container video,
+    .media-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Tighter grid layout for smaller figures */
+    .two-col-media {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .three-col-media {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 1024px) {
+      .three-col-media { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      .two-col-media { grid-template-columns: 1fr; }
+      .three-col-media { grid-template-columns: 1fr; }
+    }
+
+    /* ── Cards ───────────────────────────────────────────────── */
+    .card.clean {
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      border: none;
+      border-radius: 10px;
+    }
+    .card.clean:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .paper-abstract {
+      line-height: 1.75;
+      text-align: justify;
+    }
+    .metric-list li { margin-bottom: 0.75rem; }
+
+    /* ── Keyword pill ────────────────────────────────────────── */
+    .keyword-pill {
+      display: inline-block;
+      background: #eef3ff;
+      color: #3273dc;
+      border: 1px solid #b8cef5;
+      border-radius: 20px;
+      padding: 0.2rem 0.8rem;
+      margin: 0.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* ── Section alternating backgrounds ────────────────────── */
+    .section.is-light-alt { background: #f7f9fc; }
+    .section.is-white-alt { background: #fff; }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .footer { 
+      background: #1a1a2e; 
+      color: rgba(255,255,255,.65); 
+      padding: 2rem 1.5rem; 
+    }
+    .footer a { color: rgba(255,255,255,.8); }
+    .footer a:hover { color: #fff; }
+
+    /* ── Responsive tweaks ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .title.paper-title { font-size: 1.5rem; }
+      .section-heading { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-progress-bar">
+    <div class="page-progress-bar-fill"></div>
+  </div>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item has-text-weight-semibold" href="#top">A-SLIP</a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNav">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="mainNav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#overview">Overview</a>
+        <a class="navbar-item" href="#abstract">Abstract</a>
+        <a class="navbar-item" href="#system">System Design</a>
+        <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#evaluation">Evaluation</a>
+        <a class="navbar-item" href="#citation">Citation</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero-teaser-wrap" id="top">
+    <video class="teaser-video-bg" muted playsinline autoplay loop preload="auto">
+      <source src="assets/front_teaser.mp4" type="video/mp4">
+    </video>
+    <div class="teaser-overlay" aria-hidden="true"></div>
+    <button type="button" class="scroll-indicator" id="scroll-indicator-btn" aria-label="Scroll to content">
+      <span class="scroll-indicator-arrow"><i class="fas fa-chevron-down"></i></span>
+      <span>Scroll</span>
+    </button>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="hero-teaser-content">
+          <h1 class="title paper-title">A-SLIP: Acoustic Sensing for Continuous In-hand Slip Estimation</h1>
+          <p class="author-list">Uksang Yoo*, Yuemin Mao*, Jean Oh, Jeffrey Ichnowski</p>
+          <p class="affiliation-list">Carnegie Mellon University</p>
+          <p class="affiliation-list" style="font-size: 0.88rem;">* Equal contribution</p>
+
+          <div class="link-buttons">
+            <a class="button is-dark" href="#" target="_blank">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv</span>
+            </a>
+            <a class="button is-dark" href="assets/a-slip.pdf" target="_blank">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a class="button is-dark" href="#" target="_blank">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code (Coming Soon)</span>
+            </a>
+            <a class="button is-warning" href="#" target="_blank">
+              <span class="icon"><i class="fas fa-database"></i></span>
+              <span>Dataset (Coming Soon)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="overview" class="section is-white-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">System Overview</h2>
+      <div class="section-divider"></div>
+
+      <div class="media-container" style="max-width: 80%; margin: 0 auto;">
+        <img src="assets/system_overview.jpg" alt="A-SLIP System Overview">
+      </div>
+
+      <div class="card clean" style="margin-top: 1.5rem;">
+        <div class="card-content content">
+          <p>
+            A-SLIP is a complete system for real-time slip estimation in robotic grasping. The system integrates
+            piezoelectric microphones into a parallel-jaw gripper and uses a convolutional neural network to process
+            synchronized multi-channel audio spectrograms, jointly estimating slip presence, direction, and magnitude
+            in the grasp plane.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="abstract" class="section">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Abstract</h2>
+      <div class="section-divider"></div>
+
+      <div class="abstract-box">
+        Reliable in-hand manipulation requires accurate real-time estimation of slip between a gripper and a grasped object.
+        A-SLIP introduces a multi-channel acoustic sensing system integrated into a parallel-jaw gripper for continuous
+        slip estimation in the grasp plane. The sensor uses piezoelectric microphones behind a textured silicone contact pad
+        to capture structured contact-induced vibrations. A lightweight convolutional model processes synchronized multi-channel
+        log-mel spectrograms and jointly predicts slip presence, direction, and magnitude. Across robot- and externally-induced
+        slip experiments, A-SLIP achieves strong directional accuracy and improves slip detection over prior baselines, and further
+        demonstrates robust real-time performance in closed-loop reactive control.
+      </div>
+    </div>
+  </section>
+
+  <section id="system" class="section is-light-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Sensor Design</h2>
+      <div class="section-divider"></div>
+
+      <div class="two-col-media">
+        <div class="media-container">
+          <img src="assets/sensor_design_v3.jpg" alt="A-SLIP Sensor Design">
+        </div>
+        <div class="media-container">
+          <img src="assets/Hardware_setup.jpg" alt="Hardware Setup">
+        </div>
+      </div>
+
+      <div class="card clean" style="margin-top: 1.5rem;">
+        <div class="card-content content">
+          <p>
+            The A-SLIP sensor consists of piezoelectric microphones embedded behind a textured silicone contact pad
+            in a parallel-jaw gripper. The textured surface promotes structured vibrations during slip, while the
+            piezoelectric microphones capture broadband acoustic signals with minimal footprint.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1.5rem;">Design Variations</h3>
+        <div class="two-col-media">
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/desing_placement.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #eef3ff; text-align: center; font-size: 0.85rem; color: #3273dc; font-weight: 500;">Microphone Placement</div>
+          </div>
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/desing_texture.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #eef3ff; text-align: center; font-size: 0.85rem; color: #3273dc; font-weight: 500;">Contact Surface Texture</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contributions" class="section is-white-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Contributions</h2>
+      <div class="section-divider"></div>
+
+      <div class="card clean">
+        <div class="card-content content">
+          <ul style="line-height: 1.8;">
+            <li>A low-profile, low-cost acoustic gripper sensor with textured silicone contact surfaces and embedded piezoelectric microphones.</li>
+            <li>A unified learning objective that jointly estimates slip presence, magnitude, and direction from synchronized multi-channel audio.</li>
+            <li>A two-stage pretraining and finetuning pipeline for robust transfer to real robot slip estimation and reactive control settings.</li>
+            <li>Extensive real-world experiments on continuous in-hand slip estimation and closed-loop manipulation tasks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="section is-light-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Method</h2>
+      <div class="section-divider"></div>
+
+      <div class="media-container" style="max-width: 85%; margin: 0 auto;">
+        <img src="assets/model_architecture.jpg" alt="A-SLIP Model Architecture">
+      </div>
+
+      <div class="card clean" style="margin-top: 1.5rem;">
+        <div class="card-content content">
+          <p>
+            A-SLIP uses a lightweight convolutional network that processes synchronized multi-channel log-mel spectrograms
+            from the piezoelectric microphones. The model employs channel and temporal attention mechanisms to jointly predict
+            slip presence, direction, and magnitude through a unified multi-objective learning framework.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1.5rem;">Training Strategy</h3>
+        <div class="two-col-media">
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/pretrain_data.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #f7f9fc; text-align: center; font-size: 0.85rem; font-weight: 500; color: #555;">Pretraining Data</div>
+          </div>
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/finetune_data.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #f7f9fc; text-align: center; font-size: 0.85rem; font-weight: 500; color: #555;">Finetuning Data</div>
+          </div>
+        </div>
+
+        <div class="card clean" style="margin-top: 1.5rem;">
+          <div class="card-content">
+            <img src="assets/training_data_distribution.png" alt="Training Data Distribution" style="width: 100%; border-radius: 8px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="evaluation" class="section is-white-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Evaluation & Results</h2>
+      <div class="section-divider"></div>
+
+      <div class="two-col-media">
+        <div class="media-container">
+          <img src="assets/evaluation_task1_task2.jpg" alt="Evaluation Tasks">
+        </div>
+        <div class="media-container">
+          <img src="assets/evaluation_predictions.jpg" alt="Prediction Results">
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1.5rem;">Closed-Loop Control Tasks</h3>
+        <div class="two-col-media">
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/evaluation_task1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #f7f9fc; text-align: center; font-size: 0.85rem; font-weight: 500; color: #555;">Task 1: Slip Detection & Stop</div>
+          </div>
+          <div class="media-container">
+            <video controls style="width: 100%;">
+              <source src="assets/evaluation_task2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div style="padding: 0.75rem; background: #f7f9fc; text-align: center; font-size: 0.85rem; font-weight: 500; color: #555;">Task 2: Slip Tracking Control</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1.5rem;">Prediction Examples</h3>
+        <div class="media-container" style="max-width: 75%; margin: 0 auto;">
+          <video controls style="width: 100%;">
+            <source src="assets/evaluation_prediction.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="card clean" style="margin-top: 2.5rem;">
+        <div class="card-content content">
+          <h3 style="font-weight: 600; color: #1a1a2e; margin-bottom: 1.25rem;">Key Results</h3>
+          <ul class="metric-list">
+            <li>Finetuned 4-microphone A-SLIP reaches a mean absolute directional error of <strong>14.1°</strong>.</li>
+            <li>Improves slip detection accuracy by up to <strong>12%</strong> relative to baselines.</li>
+            <li>Reduces directional error by <strong>32%</strong> over baseline methods.</li>
+            <li>Compared to single-microphone designs, multi-channel sensing reduces directional error by <strong>64%</strong> and magnitude error by <strong>68%</strong>.</li>
+            <li>Demonstrates reliable behavior in closed-loop reactive control tasks under real robot operating conditions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="citation" class="section is-light-alt">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="section-heading">Citation</h2>
+      <div class="section-divider"></div>
+
+      <div class="card clean">
+        <div class="card-content">
+          <pre style="background: #1e1e2e; color: #cdd6f4; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6;">@inproceedings{a_slip_2026,
+  title={A-SLIP: Acoustic Sensing for Continuous In-hand Slip Estimation},
+  author={Yoo*, Uksang and Mao*, Yuemin and Oh, Jean and Ichnowski, Jeffrey},
+  year={2026},
+  note={Under review. * indicates equal contribution}
+}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p><strong>A-SLIP</strong> — Acoustic Sensing for Continuous In-hand Slip Estimation</p>
+      <p style="font-size: 0.9rem; margin-top: 0.5rem;">(Under Review)</p>
+    </div>
+  </footer>
+
+  <script>
+    // Page progress bar
+    document.addEventListener('scroll', function() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.querySelector('.page-progress-bar-fill').style.width = scrollPercent + '%';
+    });
+
+    // Update navbar transparency on scroll
+    function updateNavbarOnScroll() {
+      const navbar = document.querySelector('.navbar');
+      const hero = document.getElementById('top');
+      if (!navbar || !hero) return;
+      
+      const heroBottom = hero.offsetHeight;
+      const scrollTop = window.scrollY;
+      
+      if (scrollTop < heroBottom - 100) {
+        navbar.classList.add('navbar-over-video');
+      } else {
+        navbar.classList.remove('navbar-over-video');
+      }
+    }
+    
+    window.addEventListener('scroll', updateNavbarOnScroll);
+    updateNavbarOnScroll();
+
+    // Mobile navbar burger
+    const burger = document.querySelector('.navbar-burger');
+    const menu = document.getElementById('mainNav');
+    if (burger && menu) {
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active');
+      });
+    }
+
+    // Scroll indicator click to scroll
+    const scrollBtn = document.getElementById('scroll-indicator-btn');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', () => {
+        const target = document.getElementById('overview');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
