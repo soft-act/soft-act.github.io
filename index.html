@@ -391,7 +391,7 @@
         <a class="navbar-item" href="#method">Method</a>
         <a class="navbar-item" href="#retargeting-viz">Visualization</a>
         <a class="navbar-item" href="#evaluation">Evaluation</a>
-        <a class="navbar-item" href="#supplemental">Supplemental</a>
+        <a class="navbar-item" href="#overview">Overview</a>
         <a class="navbar-item" href="#citation">Citation</a>
       </div>
     </div>
@@ -439,6 +439,21 @@
       <div class="section-divider"></div>
       <div class="abstract-box">
         We introduce <strong>SoftAct</strong>, a framework for teaching soft robot hands to perform human-like manipulation skills by explicitly reasoning about contact forces. Leveraging immersive virtual reality, our system captures rich human demonstrations, including hand kinematics, object motion, dense contact patches, and detailed contact force information. Unlike conventional approaches that retarget human joint trajectories, SoftAct employs a two-stage, force-aware retargeting algorithm. The first stage attributes demonstrated contact forces to individual human fingers and allocates robot fingers proportionally, establishing a force-balanced mapping between human and robot hands. The second stage performs online retargeting by combining baseline end-effector pose tracking with geodesic-weighted contact refinements, using contact geometry and force magnitude to adjust robot fingertip targets in real time. This formulation enables soft robotic hands to reproduce the functional intent of human demonstrations while naturally accommodating extreme embodiment mismatch and nonlinear compliance. We evaluate SoftAct on a suite of contact-rich manipulation tasks using a custom non-anthropomorphic pneumatic soft robot hand. SoftAct's controller reduces fingertip trajectory tracking RMSE by up to <strong>55%</strong> and reduces tracking variance by up to <strong>69%</strong> compared to kinematic and learning-based baselines. At the policy level, SoftAct achieves consistently higher success in zero-shot real-world deployment and in simulation.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ OVERVIEW VIDEO ══════════ -->
+  <section id="overview" class="section is-light-alt">
+    <div class="container" style="max-width:900px;">
+      <h2 class="section-heading">Overview</h2>
+      <div class="section-divider"></div>
+
+      <div class="media-container" style="max-width:90%;margin:0 auto;">
+        <video controls preload="metadata" style="width:100%;">
+          <source src="assets/website_supp.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </section>
@@ -835,28 +850,6 @@
     </div>
   </section>
 
-  <!-- ══════════ SUPPLEMENTAL ══════════ -->
-  <section id="supplemental" class="section is-light-alt">
-    <div class="container" style="max-width:900px;">
-      <h2 class="section-heading">Supplemental Video</h2>
-      <div class="section-divider"></div>
-
-      <div class="media-container" style="max-width:90%;margin:0 auto;">
-        <video controls preload="metadata" style="width:100%;">
-          <source src="assets/website_supp.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-
-      <div class="card clean" style="margin-top:1.5rem;">
-        <div class="card-content content">
-          <p style="line-height:1.75;">
-            The supplemental video shows zero-shot real-world policy rollouts for <strong>paper cup pouring</strong>, <strong>box reorientation</strong>, and <strong>light bulb screwing</strong> using the full SoftAct pipeline. It also includes side-by-side comparisons against the kinematic retargeting baseline and qualitative visualizations of contact force distributions across tasks.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════ CITATION ══════════ -->
   <section id="citation" class="section is-white-alt">
