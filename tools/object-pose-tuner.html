@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SoftAct — object pose tuner</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, "Segoe UI", sans-serif; background: #0e1016; color: #e8eaef; }
+    #wrap { display: flex; height: 100vh; }
+    #panel {
+      width: 320px; flex-shrink: 0; overflow-y: auto;
+      padding: 14px 16px 24px; background: #141824;
+      border-right: 1px solid #2a3148;
+    }
+    h1 { font-size: 1rem; font-weight: 600; margin: 0 0 4px; }
+    .sub { font-size: 0.75rem; color: #8b93a8; margin-bottom: 14px; line-height: 1.45; }
+    label { display: block; font-size: 0.72rem; color: #9aa3b8; margin: 10px 0 4px; }
+    select, input[type="file"] { width: 100%; font-size: 0.85rem; }
+    .row { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+    .row input[type="range"] { flex: 1; }
+    .row span.val { width: 52px; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.78rem; color: #c8d0e0; }
+    button {
+      width: 100%; margin-top: 10px; padding: 8px 10px; border: none; border-radius: 6px;
+      font-weight: 600; cursor: pointer; font-size: 0.82rem;
+    }
+    .primary { background: #3273dc; color: #fff; }
+    .secondary { background: #2a3148; color: #e8eaef; }
+    .danger { background: #4a2020; color: #fca5a5; }
+    #viewport { flex: 1; position: relative; min-width: 0; }
+    #viewport canvas { display: block; width: 100%; height: 100%; }
+    .hint { font-size: 0.7rem; color: #6b7388; margin-top: 12px; line-height: 1.5; }
+    fieldset { border: 1px solid #2a3148; border-radius: 8px; margin: 12px 0; padding: 8px 10px; }
+    legend { font-size: 0.72rem; padding: 0 6px; color: #8b93a8; }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div id="panel">
+      <h1>Object pose tuner</h1>
+      <p class="sub">Adjust a fixed rigid correction per task (same frame as the site: centered scene, cm). Save JSON into <code style="font-size:0.7rem">assets/data/object-pose-offsets.json</code> and reload the main page.</p>
+
+      <label>Task</label>
+      <select id="taskSel"></select>
+
+      <fieldset>
+        <legend>Translation (cm)</legend>
+        <label>ΔX</label>
+        <div class="row"><input type="range" id="tx" min="-8" max="8" step="0.05" value="0" /><span class="val" id="txv">0</span></div>
+        <label>ΔY</label>
+        <div class="row"><input type="range" id="ty" min="-8" max="8" step="0.05" value="0" /><span class="val" id="tyv">0</span></div>
+        <label>ΔZ</label>
+        <div class="row"><input type="range" id="tz" min="-8" max="8" step="0.05" value="0" /><span class="val" id="tzv">0</span></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Rotation (deg, intrinsic XYZ like Three.js)</legend>
+        <label>Rx</label>
+        <div class="row"><input type="range" id="rx" min="-180" max="180" step="0.5" value="0" /><span class="val" id="rxv">0</span></div>
+        <label>Ry</label>
+        <div class="row"><input type="range" id="ry" min="-180" max="180" step="0.5" value="0" /><span class="val" id="ryv">0</span></div>
+        <label>Rz</label>
+        <div class="row"><input type="range" id="rz" min="-180" max="180" step="0.5" value="0" /><span class="val" id="rzv">0</span></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pivot for rotation</legend>
+        <label><input type="radio" name="pivot" id="pivCent" value="centroid" checked /> Object centroid</label>
+        <label style="margin-top:6px"><input type="radio" name="pivot" id="pivOrig" value="origin" /> Scene origin</label>
+      </fieldset>
+
+      <button type="button" class="secondary" id="btnResetTask">Reset this task</button>
+      <button type="button" class="primary" id="btnDownload">Download object-pose-offsets.json</button>
+      <label style="margin-top:12px">Load scenes JSON</label>
+      <input type="file" id="fileScenes" accept=".json" />
+      <label>Merge offsets JSON</label>
+      <input type="file" id="fileOffsets" accept=".json" />
+
+      <p class="hint">Serve the repo from the site root, e.g. <code>cd soft-act.github.io && python3 -m http.server 8765</code> — then open <code>http://localhost:8765/tools/object-pose-tuner.html</code>. Or use the file pickers after placing this HTML next to assets.</p>
+    </div>
+    <div id="viewport"></div>
+  </div>
+
+  <script src="../assets/object-pose-offset.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const TASK_IDS = ['insertion', 'twisting', 'pouring', 'grabbing', 'unscrewing', 'reorienting'];
+
+    let sceneData = null;
+    let offsetBundle = { version: 1, tasks: {} };
+
+    function ensureTaskEntry(id) {
+      if (!offsetBundle.tasks[id]) {
+        offsetBundle.tasks[id] = { translateCm: [0, 0, 0], rotateDeg: [0, 0, 0], pivot: 'centroid' };
+      }
+      return offsetBundle.tasks[id];
+    }
+
+    TASK_IDS.forEach(ensureTaskEntry);
+
+    const taskSel = document.getElementById('taskSel');
+    TASK_IDS.forEach(function (id) {
+      const o = document.createElement('option');
+      o.value = id;
+      o.textContent = id;
+      taskSel.appendChild(o);
+    });
+
+    const viewport = document.getElementById('viewport');
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+    renderer.setClearColor(0x0e1016, 1);
+    viewport.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, viewport.clientWidth / viewport.clientHeight, 0.1, 500);
+    camera.position.set(18, 22, 28);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0, 0);
+    controls.update();
+
+    scene.add(new THREE.AmbientLight(0x606880, 0.9));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.85);
+    dl.position.set(4, 10, 6);
+    scene.add(dl);
+
+    const handGroup = new THREE.Group();
+    const objGroup = new THREE.Group();
+    scene.add(handGroup);
+    scene.add(objGroup);
+
+    let handMesh = null;
+    let objMesh = null;
+
+    function disposeGroup(g) {
+      while (g.children.length) {
+        const m = g.children[0];
+        g.remove(m);
+        if (m.geometry) m.geometry.dispose();
+        if (m.material) m.material.dispose();
+      }
+    }
+
+    function buildHandGeometry(ex, handMeta) {
+      const pos = ex.skinnedVertices.flat();
+      const faces = handMeta.faces;
+      const idx = [];
+      for (let i = 0; i < faces.length; i++) {
+        const f = faces[i];
+        idx.push(f[0], f[1], f[2]);
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      g.setIndex(idx);
+      g.computeVertexNormals();
+      return g;
+    }
+
+    function buildObjectGeometry(ex, taskId) {
+      const raw = ex.object.vertices;
+      const adj =
+        typeof applyObjectPoseOffsetToVertices === 'function'
+          ? applyObjectPoseOffsetToVertices(raw, taskId, ensureTaskEntry(taskId))
+          : raw;
+      const pos = adj.flat();
+      const faces = ex.object.faces;
+      const idx = [];
+      for (let i = 0; i < faces.length; i++) {
+        const f = faces[i];
+        idx.push(f[0], f[1], f[2]);
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      g.setIndex(idx);
+      g.computeVertexNormals();
+      return g;
+    }
+
+    function frameCameraOnScene() {
+      const box = new THREE.Box3();
+      let ok = false;
+      if (handMesh) {
+        box.expandByObject(handMesh);
+        ok = true;
+      }
+      if (objMesh) {
+        box.expandByObject(objMesh);
+        ok = true;
+      }
+      if (!ok) return;
+      const ctr = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const r = Math.max(size.x, size.y, size.z) * 0.6 || 12;
+      controls.target.copy(ctr);
+      camera.near = Math.max(0.05, r / 200);
+      camera.far = r * 80;
+      camera.updateProjectionMatrix();
+      camera.position.set(ctr.x + r * 1.35, ctr.y + r * 1.05, ctr.z + r * 1.35);
+      controls.update();
+    }
+
+    function refreshMeshes() {
+      if (!sceneData || !sceneData.tasks) return;
+      const tid = taskSel.value;
+      const ex = sceneData.tasks[tid];
+      const handMeta = sceneData.hand;
+      if (!ex || !handMeta) return;
+
+      disposeGroup(handGroup);
+      disposeGroup(objGroup);
+      handMesh = null;
+      objMesh = null;
+
+      const hg = buildHandGeometry(ex, handMeta);
+      handMesh = new THREE.Mesh(
+        hg,
+        new THREE.MeshStandardMaterial({ color: 0xc8b4a8, roughness: 0.85, metalness: 0.05, side: THREE.DoubleSide })
+      );
+      handGroup.add(handMesh);
+
+      if (ex.object && ex.object.vertices) {
+        const og = buildObjectGeometry(ex, tid);
+        objMesh = new THREE.Mesh(
+          og,
+          new THREE.MeshStandardMaterial({ color: 0x7eb8ff, roughness: 0.45, metalness: 0.15, side: THREE.DoubleSide })
+        );
+        objGroup.add(objMesh);
+      }
+
+      frameCameraOnScene();
+    }
+
+    function readSlidersIntoTask() {
+      const tid = taskSel.value;
+      const t = ensureTaskEntry(tid);
+      t.translateCm = [
+        parseFloat(document.getElementById('tx').value),
+        parseFloat(document.getElementById('ty').value),
+        parseFloat(document.getElementById('tz').value),
+      ];
+      t.rotateDeg = [
+        parseFloat(document.getElementById('rx').value),
+        parseFloat(document.getElementById('ry').value),
+        parseFloat(document.getElementById('rz').value),
+      ];
+      t.pivot = document.getElementById('pivOrig').checked ? 'origin' : 'centroid';
+    }
+
+    function slidersToUi() {
+      const tid = taskSel.value;
+      const t = ensureTaskEntry(tid);
+      document.getElementById('tx').value = t.translateCm[0] ?? 0;
+      document.getElementById('ty').value = t.translateCm[1] ?? 0;
+      document.getElementById('tz').value = t.translateCm[2] ?? 0;
+      document.getElementById('rx').value = t.rotateDeg[0] ?? 0;
+      document.getElementById('ry').value = t.rotateDeg[1] ?? 0;
+      document.getElementById('rz').value = t.rotateDeg[2] ?? 0;
+      if (t.pivot === 'origin') document.getElementById('pivOrig').checked = true;
+      else document.getElementById('pivCent').checked = true;
+      ['tx', 'ty', 'tz', 'rx', 'ry', 'rz'].forEach(updateValLabel);
+    }
+
+    function updateValLabel(id) {
+      const el = document.getElementById(id);
+      const v = document.getElementById(id + 'v');
+      if (v) v.textContent = Number(parseFloat(el.value).toFixed(2));
+    }
+
+    function bindSlider(id) {
+      const el = document.getElementById(id);
+      el.addEventListener('input', function () {
+        updateValLabel(id);
+        readSlidersIntoTask();
+        refreshMeshes();
+      });
+    }
+    ['tx', 'ty', 'tz', 'rx', 'ry', 'rz'].forEach(bindSlider);
+
+    document.querySelectorAll('input[name="pivot"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        readSlidersIntoTask();
+        refreshMeshes();
+      });
+    });
+
+    taskSel.addEventListener('change', function () {
+      slidersToUi();
+      refreshMeshes();
+    });
+
+    document.getElementById('btnResetTask').addEventListener('click', function () {
+      const tid = taskSel.value;
+      offsetBundle.tasks[tid] = { translateCm: [0, 0, 0], rotateDeg: [0, 0, 0], pivot: 'centroid' };
+      slidersToUi();
+      refreshMeshes();
+    });
+
+    document.getElementById('btnDownload').addEventListener('click', function () {
+      readSlidersIntoTask();
+      const blob = new Blob([JSON.stringify(offsetBundle, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'object-pose-offsets.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById('fileScenes').addEventListener('change', function (e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      f.text().then(function (txt) {
+        sceneData = JSON.parse(txt);
+        refreshMeshes();
+      });
+    });
+
+    document.getElementById('fileOffsets').addEventListener('change', function (e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      f.text().then(function (txt) {
+        const o = JSON.parse(txt);
+        if (o.tasks) offsetBundle.tasks = Object.assign(offsetBundle.tasks, o.tasks);
+        TASK_IDS.forEach(ensureTaskEntry);
+        slidersToUi();
+        refreshMeshes();
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      const w = viewport.clientWidth;
+      const h = viewport.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+
+    function tick() {
+      requestAnimationFrame(tick);
+      renderer.render(scene, camera);
+    }
+    tick();
+
+    fetch('../assets/data/softact-scenes.json')
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (d) {
+        sceneData = d;
+        return fetch('../assets/data/object-pose-offsets.json').then(function (r) {
+          return r.ok ? r.json() : null;
+        });
+      })
+      .then(function (off) {
+        if (off && off.tasks) offsetBundle.tasks = Object.assign(offsetBundle.tasks, off.tasks);
+        TASK_IDS.forEach(ensureTaskEntry);
+        slidersToUi();
+        refreshMeshes();
+      })
+      .catch(function () {
+        slidersToUi();
+      });
+  </script>
+</body>
+</html>

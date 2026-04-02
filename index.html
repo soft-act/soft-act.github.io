@@ -39,384 +39,335 @@
       overscroll-behavior-y: none;
     }
 
-    .container {
-      width: 80%;
-    }
+    .container { width: 80%; }
 
+    /* ── Progress bar ── */
     .page-progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: rgba(0,0,0,0.06);
-      z-index: 101;
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 4px; background: rgba(0,0,0,0.06);
+      z-index: 101; pointer-events: none;
     }
-
     .page-progress-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: #3273dc;
-      transition: width 0.08s ease-out;
+      height: 100%; width: 0%;
+      background: #3273dc; transition: width 0.08s ease-out;
     }
 
+    /* ── Navbar ── */
     .navbar {
       background: rgba(255,255,255,0.95);
       backdrop-filter: blur(6px);
       box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; transition: background 0.3s ease, box-shadow 0.3s ease;
     }
+    .navbar-item { font-weight: 500; color: #333 !important; transition: color 0.2s ease; }
+    .navbar-item:hover { color: #3273dc !important; }
+    .navbar-item.is-active-section { color: #3273dc !important; }
+    .navbar.navbar-over-video { background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none !important; }
+    .navbar.navbar-over-video .navbar-item { color: rgba(255,255,255,0.9) !important; }
+    .navbar.navbar-over-video .navbar-item:hover { color: #3273dc !important; }
+    .navbar.navbar-over-video .navbar-burger span { background-color: #fff; }
 
-    .navbar-item {
-      font-weight: 500;
-      color: #333 !important;
-      transition: color 0.2s ease;
-    }
-
-    .navbar-item:hover {
-      color: #3273dc !important;
-    }
-
-    .navbar-item.is-active-section {
-      color: #3273dc !important;
-    }
-
-    .navbar.navbar-over-video {
-      background: transparent !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      box-shadow: none !important;
-    }
-
-    .navbar.navbar-over-video .navbar-item {
-      color: rgba(255,255,255,0.9) !important;
-    }
-
-    .navbar.navbar-over-video .navbar-item:hover {
-      color: #3273dc !important;
-    }
-
-    .navbar.navbar-over-video .navbar-burger span {
-      background-color: #fff;
-    }
-
+    /* ── Hero ── */
     .hero-teaser-wrap {
-      position: relative;
-      overflow-x: hidden;
-      min-height: 100vh;
-      background: #000;
+      position: relative; overflow-x: hidden;
+      min-height: 100vh; background: #000;
     }
-
     .hero-teaser-wrap .teaser-video-bg {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 1800px;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
+      position: absolute; top: 0; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1800px; height: 100%;
+      object-fit: cover; z-index: 0;
     }
-
     .hero-teaser-wrap .teaser-overlay {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 50%,
-        rgba(0,0,0,0.25) 88%,
-        rgba(0,0,0,0.4) 100%
-      );
-      z-index: 1;
-      pointer-events: none;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.25) 88%, rgba(0,0,0,0.4) 100%);
+      z-index: 1; pointer-events: none;
     }
-
     .hero-teaser-wrap::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 50%,
-        rgba(0,0,0,0.25) 88%,
-        rgba(0,0,0,0.4) 100%
-      );
-      z-index: 1;
-      pointer-events: none;
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.25) 88%, rgba(0,0,0,0.4) 100%);
+      z-index: 1; pointer-events: none;
     }
-
     .hero-teaser-wrap .hero-body {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
-      padding: 2.5rem 1.5rem 5rem;
-      width: 100%;
-      transition: opacity 0.12s ease-out;
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 2; padding: 2.5rem 1.5rem 5rem;
+      width: 100%; transition: opacity 0.12s ease-out;
     }
-
-    .hero-teaser-wrap .hero-teaser-content {
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-
+    .hero-teaser-wrap .hero-teaser-content { max-width: 1080px; margin: 0 auto; }
     .hero-teaser-wrap .title.paper-title {
-      color: #fff;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-      margin-bottom: 0.5rem;
+      color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); margin-bottom: 0.5rem;
     }
-
     .hero-teaser-wrap .author-list {
-      color: rgba(255,255,255,0.95);
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      margin-top: 0.6rem;
-      margin-bottom: 0.35rem;
+      color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      margin-top: 0.6rem; margin-bottom: 0.35rem;
     }
-
     .hero-teaser-wrap .affiliation-list {
-      color: rgba(255,255,255,0.9);
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      margin-top: 0.4rem;
-      margin-bottom: 0.2rem;
+      color: rgba(255,255,255,0.9); text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      margin-top: 0.4rem; margin-bottom: 0.2rem;
     }
-
-    .hero-teaser-wrap .link-buttons {
-      margin-top: 1.25rem;
-    }
-
-    .hero-teaser-wrap .link-buttons .button {
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
+    .hero-teaser-wrap .link-buttons { margin-top: 1.25rem; }
+    .hero-teaser-wrap .link-buttons .button { box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 
     .scroll-indicator {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-      color: rgba(255,255,255,0.9);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.12s ease-out;
+      position: absolute; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+      color: rgba(255,255,255,0.9); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; transition: opacity 0.12s ease-out;
     }
-
-    .scroll-indicator:hover {
-      color: #fff;
-    }
-
-    .scroll-indicator-arrow {
-      animation: scroll-bounce 2s ease-in-out infinite;
-    }
-
+    .scroll-indicator:hover { color: #fff; }
+    .scroll-indicator-arrow { animation: scroll-bounce 2s ease-in-out infinite; }
     @keyframes scroll-bounce {
       0%, 100% { transform: translateY(0); opacity: 1; }
       50% { transform: translateY(6px); opacity: 0.7; }
     }
 
-    .title.paper-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1.25;
-      color: #1a1a2e;
-    }
+    /* ── Typography ── */
+    .title.paper-title { font-size: 2.2rem; font-weight: 700; line-height: 1.25; color: #1a1a2e; }
+    .author-list { font-size: 1.05rem; margin-bottom: 0.5rem; color: #4a4a4a; }
+    .author-list a { color: #3273dc; text-decoration: none; }
+    .author-list a:hover { text-decoration: underline; }
+    .affiliation-list { font-size: 0.95rem; color: #555; }
+    .link-buttons { margin-top: 1.5rem; }
+    .link-buttons .button { margin: 0.3rem; border-radius: 20px; font-weight: 600; }
+    .section-heading { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; text-align: center; margin-bottom: 0.5rem; }
+    .section-divider { width: 60px; height: 4px; background: #3273dc; margin: 0 auto 2rem; border-radius: 2px; }
 
-    .author-list {
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-      color: #4a4a4a;
-    }
-
-    .author-list a {
-      color: #3273dc;
-      text-decoration: none;
-    }
-
-    .author-list a:hover {
-      text-decoration: underline;
-    }
-
-    .affiliation-list {
-      font-size: 0.95rem;
-      color: #555;
-    }
-
-    .link-buttons {
-      margin-top: 1.5rem;
-    }
-
-    .link-buttons .button {
-      margin: 0.3rem;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    .section-heading {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1a1a2e;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-divider {
-      width: 60px;
-      height: 4px;
-      background: #3273dc;
-      margin: 0 auto 2rem;
-      border-radius: 2px;
-    }
-
+    /* ── Cards & Boxes ── */
     .abstract-box {
-      background: #f7f9fc;
-      border-left: 4px solid #3273dc;
-      padding: 1.5rem 2rem;
-      border-radius: 0 8px 8px 0;
-      font-size: 1rem;
-      line-height: 1.75;
-      text-align: justify;
+      background: #f7f9fc; border-left: 4px solid #3273dc;
+      padding: 1.5rem 2rem; border-radius: 0 8px 8px 0;
+      font-size: 1rem; line-height: 1.75; text-align: justify;
     }
-
     .media-container {
-      border-radius: 10px;
-      overflow: hidden;
+      border-radius: 10px; overflow: hidden;
       box-shadow: 0 2px 12px rgba(0,0,0,.08);
       transition: transform .2s, box-shadow .2s;
     }
+    .media-container:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .media-container video, .media-container img { width: 100%; height: auto; display: block; }
+    .card.clean { box-shadow: 0 2px 12px rgba(0,0,0,.08); border: none; border-radius: 10px; }
+    .card.clean:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); transition: box-shadow 0.2s ease; }
+    .paper-abstract { line-height: 1.75; text-align: justify; }
+    .metric-list li { margin-bottom: 0.75rem; }
+    .section.is-light-alt { background: #f7f9fc; }
+    .section.is-white-alt { background: #fff; }
 
-    .media-container:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    /* ── Footer ── */
+    .footer { background: #1a1a2e; color: rgba(255,255,255,.65); padding: 2rem 1.5rem; }
+    .footer a { color: rgba(255,255,255,.8); }
+    .footer a:hover { color: #fff; }
+
+    /* ── Math blocks ── */
+    .math-block {
+      background: #f0f4ff; border-left: 3px solid #3273dc;
+      padding: 1rem 1.5rem; border-radius: 0 8px 8px 0;
+      margin: 1rem 0; overflow-x: auto;
+      font-size: 0.97rem;
+    }
+    .math-block .katex-display { margin: 0; }
+
+    /* ── Pipeline flow ── */
+    .pipeline-flow {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: center; gap: 0; margin: 1.5rem 0;
+    }
+    .pipe-step {
+      background: #1a1a2e; color: #fff;
+      padding: 0.7rem 1.1rem; border-radius: 8px;
+      font-size: 0.82rem; font-weight: 600; text-align: center;
+      min-width: 100px; line-height: 1.35;
+    }
+    .pipe-step.highlight { background: #3273dc; }
+    .pipe-step.highlight2 { background: #1d5db8; }
+    .pipe-arrow {
+      color: #3273dc; font-size: 1.2rem; padding: 0 0.4rem;
+      flex-shrink: 0;
     }
 
-    .media-container video,
-    .media-container img {
-      width: 100%;
-      height: auto;
-      display: block;
+    /* ── Stage badge ── */
+    .stage-badge {
+      display: inline-block; background: #3273dc; color: white;
+      padding: 0.15em 0.65em; border-radius: 12px;
+      font-size: 0.78rem; font-weight: 700;
+      margin-right: 0.5rem; vertical-align: middle;
     }
 
-    .card.clean {
-      box-shadow: 0 2px 12px rgba(0,0,0,.08);
-      border: none;
-      border-radius: 10px;
+    /* ── Visualization containers ── */
+    .viz-wrap {
+      background: #0f1117; border-radius: 10px; overflow: hidden;
+      position: relative;
+    }
+    .viz-canvas {
+      width: 100%; display: block; cursor: grab;
+    }
+    .viz-canvas:active { cursor: grabbing; }
+    .viz-overlay-label {
+      position: absolute; top: 10px; right: 12px;
+      color: rgba(255,255,255,0.45); font-size: 0.7rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      pointer-events: none;
     }
 
-    .card.clean:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,.12);
-      transition: box-shadow 0.2s ease;
+    /* ── Task selector buttons ── */
+    .task-selector {
+      display: flex; flex-wrap: wrap; gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+    .task-btn {
+      padding: 0.35rem 0.85rem; border-radius: 20px;
+      border: 2px solid #3273dc; background: transparent;
+      color: #3273dc; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s;
+      font-family: inherit;
+    }
+    .task-btn.active, .task-btn:hover { background: #3273dc; color: #fff; }
+
+    /* ── Shape selector for trajectory viz ── */
+    .shape-selector {
+      display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .shape-btn {
+      padding: 0.35rem 0.85rem; border-radius: 20px;
+      border: 2px solid #22c55e; background: transparent;
+      color: #22c55e; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s; font-family: inherit;
+    }
+    .shape-btn.active, .shape-btn:hover { background: #22c55e; color: #fff; }
+
+    /* ── Results tables ── */
+    .results-table-wrap { overflow-x: auto; border-radius: 8px; }
+    .results-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.88rem; min-width: 420px;
+    }
+    .results-table th {
+      background: #1a1a2e; color: #fff;
+      padding: 0.7rem 1rem; text-align: center;
+      font-weight: 600;
+    }
+    .results-table th:first-child { text-align: left; }
+    .results-table td {
+      padding: 0.6rem 1rem; border-bottom: 1px solid #e8ecf0;
+      text-align: center;
+    }
+    .results-table td:first-child { text-align: left; font-weight: 500; }
+    .results-table tr:nth-child(even) td { background: #f7f9fc; }
+    .results-table .best { font-weight: 700; color: #2563eb; }
+    .results-table .task-group td {
+      background: #eef2ff !important; font-weight: 600;
+      color: #1a1a2e; border-top: 2px solid #c7d2fe;
     }
 
-    .paper-abstract {
-      line-height: 1.75;
-      text-align: justify;
+    /* ── Inline tag ── */
+    .tag-pill {
+      display: inline-block; padding: 0.1em 0.5em;
+      background: #eef2ff; color: #3273dc;
+      border-radius: 8px; font-size: 0.8em; font-weight: 600;
     }
 
-    .metric-list li {
-      margin-bottom: 0.75rem;
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0; }
+    .step-list li {
+      display: flex; align-items: flex-start;
+      gap: 0.85rem; padding: 0.65rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #3273dc; color: #fff;
+      font-weight: 700; font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
     }
 
-    .section.is-light-alt {
-      background: #f7f9fc;
+    /* ── Citation ── */
+    .citation-pre {
+      background: #1e1e2e; color: #cdd6f4;
+      padding: 1.5rem; border-radius: 8px;
+      overflow-x: auto; font-size: 0.9rem; line-height: 1.6;
     }
 
-    .section.is-white-alt {
-      background: #fff;
+    /* ── Retargeting Visualization ── */
+    .rv-stage-bar {
+      display: flex; gap: 0; border: 2px solid #3273dc;
+      border-radius: 10px; overflow: hidden; margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(50,115,220,0.10);
+    }
+    .rv-stage-btn {
+      flex: 1; padding: 0.55rem 0.6rem; border: none;
+      background: transparent; color: #3273dc;
+      font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: all 0.15s ease;
+      font-family: inherit; text-align: center;
+      line-height: 1.3; border-right: 1px solid #3273dc22;
+    }
+    .rv-stage-btn:last-child { border-right: none; }
+    .rv-stage-btn.active {
+      background: linear-gradient(135deg, #3273dc 0%, #2563c9 100%);
+      color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+    }
+    .rv-stage-btn:hover:not(.active) { background: #eef2ff; }
+
+    .rv-task-bar {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem;
+    }
+    .rv-task-btn {
+      padding: 0.32rem 0.75rem; border-radius: 20px;
+      border: 1.5px solid #555; background: transparent;
+      color: #444; font-size: 0.77rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s;
+      font-family: inherit;
+    }
+    .rv-task-btn.active {
+      border-color: #3273dc; background: #3273dc; color: #fff;
+    }
+    .rv-task-btn:hover:not(.active) { border-color: #3273dc; color: #3273dc; }
+
+    .retarget-canvas-wrap {
+      background: #0d1017; border-radius: 12px; overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(50,115,220,0.18), 0 8px 32px rgba(0,0,0,0.38), 0 0 60px rgba(50,80,180,0.06);
+    }
+    #retarget-three-host {
+      width: 100%; min-height: 500px; height: 500px;
+      display: block; cursor: grab; touch-action: none;
+      position: relative;
+    }
+    #retarget-three-host:active { cursor: grabbing; }
+    #retarget-three-host canvas {
+      display: block; width: 100% !important; height: 100% !important;
     }
 
-    .footer {
-      background: #1a1a2e;
-      color: rgba(255,255,255,.65);
-      padding: 2rem 1.5rem;
+    .rv-desc-box {
+      background: #f0f4ff; border-left: 3px solid #3273dc;
+      padding: 0.85rem 1.2rem; border-radius: 0 8px 8px 0;
+      font-size: 0.88rem; line-height: 1.65; color: #333;
+      margin-top: 1rem; min-height: 52px;
     }
 
-    .footer a {
-      color: rgba(255,255,255,.8);
-    }
-
-    .footer a:hover {
-      color: #fff;
+    .rv-stage-hint {
+      font-size: 0.82rem; color: #666; margin-bottom: 0.5rem;
+      line-height: 1.5;
     }
 
     @media (max-width: 768px) {
-      .hero-teaser-wrap {
-        min-height: 100vh;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-
-      .hero-teaser-wrap .teaser-video-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        object-position: center center;
-        transform: none;
-      }
-
-      .hero-teaser-wrap .hero-body {
-        position: relative !important;
-        padding: 1.5rem 1rem 4rem;
-        padding-top: calc(3.25rem + 1rem);
-      }
-
-      .hero-teaser-wrap .title.paper-title {
-        font-size: 1.35rem;
-      }
-
-      .hero-teaser-wrap .author-list {
-        font-size: 0.85rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .hero-teaser-wrap .affiliation-list {
-        font-size: 0.78rem;
-      }
-
-      .hero-teaser-wrap .link-buttons .button {
-        font-size: 0.8rem;
-        padding: 0.4em 0.8em;
-        margin: 0.2rem;
-      }
-
-      .title.paper-title {
-        font-size: 1.5rem;
-      }
-
-      .section-heading {
-        font-size: 1.4rem;
-      }
-
-      .container {
-        width: 90%;
-      }
+      .hero-teaser-wrap { min-height: 100vh; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; }
+      .hero-teaser-wrap .teaser-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%; object-fit: cover; object-position: center center; transform: none; }
+      .hero-teaser-wrap .hero-body { position: relative !important; padding: 1.5rem 1rem 4rem; padding-top: calc(3.25rem + 1rem); }
+      .hero-teaser-wrap .title.paper-title { font-size: 1.35rem; }
+      .hero-teaser-wrap .author-list { font-size: 0.85rem; margin-bottom: 0.25rem; }
+      .hero-teaser-wrap .affiliation-list { font-size: 0.78rem; }
+      .hero-teaser-wrap .link-buttons .button { font-size: 0.8rem; padding: 0.4em 0.8em; margin: 0.2rem; }
+      .title.paper-title { font-size: 1.5rem; }
+      .section-heading { font-size: 1.4rem; }
+      .container { width: 90%; }
+      .pipeline-flow { flex-direction: column; }
+      .pipe-arrow { transform: rotate(90deg); }
     }
   </style>
 </head>
@@ -434,11 +385,11 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-
     <div id="mainNav" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item" href="#abstract">Abstract</a>
         <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#retargeting-viz">Visualization</a>
         <a class="navbar-item" href="#evaluation">Evaluation</a>
         <a class="navbar-item" href="#supplemental">Supplemental</a>
         <a class="navbar-item" href="#citation">Citation</a>
@@ -446,33 +397,31 @@
     </div>
   </nav>
 
+  <!-- ══════════ HERO ══════════ -->
   <section class="hero hero-teaser-wrap" id="top">
     <video class="teaser-video-bg" muted playsinline autoplay loop preload="auto">
       <source src="assets/teaser.mp4" type="video/mp4" />
     </video>
     <div class="teaser-overlay" aria-hidden="true"></div>
-
     <button type="button" class="scroll-indicator" id="scroll-indicator-btn" aria-label="Scroll to content">
       <span class="scroll-indicator-arrow"><i class="fas fa-chevron-down"></i></span>
       <span>Scroll</span>
     </button>
-
     <div class="hero-body">
       <div class="container has-text-centered">
         <div class="hero-teaser-content">
           <h1 class="title paper-title">Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies</h1>
           <p class="author-list">Uksang Yoo<sup>1</sup>, Mengjia Zhu<sup>2</sup>, Evan Pezent<sup>2</sup>, Jom Preechayasomboon<sup>2</sup>, Jean Oh<sup>1</sup>, Jeffrey Ichnowski<sup>1</sup>, Amir Memar<sup>2</sup>, Ben Abbatematteo<sup>2</sup>, Homanga Bharadhwaj<sup>2</sup>, Ashish Deshpande<sup>2</sup>, Harsha Prahlad<sup>2</sup></p>
-          <p class="affiliation-list"><sup>1</sup> Carnegie Mellon University (Robotics Institute)</p>
-          <p class="affiliation-list"><sup>2</sup> Meta</p>
-
+          <p class="affiliation-list"><sup>1</sup> Carnegie Mellon University, Robotics Institute &nbsp;&nbsp; <sup>2</sup> Meta</p>
           <div class="link-buttons">
             <a class="button is-dark" href="assets/softact.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="icon"><i class="fas fa-file-pdf"></i></span>
-              <span>Paper (PDF)</span>
+              <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper (PDF)</span>
             </a>
             <a class="button is-dark" href="assets/softact_supplemental.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="icon"><i class="fas fa-file-lines"></i></span>
-              <span>Supplemental (PDF)</span>
+              <span class="icon"><i class="fas fa-file-lines"></i></span><span>Supplemental (PDF)</span>
+            </a>
+            <a class="button is-link" href="https://soft-act.github.io" target="_blank" rel="noopener noreferrer">
+              <span class="icon"><i class="fas fa-globe"></i></span><span>Project Page</span>
             </a>
           </div>
         </div>
@@ -480,93 +429,457 @@
     </div>
   </section>
 
+  <!-- ══════════ ABSTRACT ══════════ -->
   <section id="abstract" class="section">
-    <div class="container" style="max-width: 900px;">
+    <div class="container" style="max-width:900px;">
       <h2 class="section-heading">Abstract</h2>
       <div class="section-divider"></div>
-
       <div class="abstract-box">
-        We introduce SoftAct, a framework for teaching soft robot hands to perform human-like manipulation skills by explicitly reasoning about contact forces. Leveraging immersive virtual reality, our system captures rich demonstrations including hand kinematics, object motion, dense contact patches, and detailed contact force information. SoftAct uses a two-stage force-aware retargeting strategy: a force-balanced finger assignment stage and an online contact-informed refinement stage with geodesic weighting. We evaluate SoftAct on contact-rich manipulation tasks with a non-anthropomorphic pneumatic soft hand. The method improves low-level tracking quality, object-level trajectory fidelity, and policy success in both simulation and zero-shot real-world deployment.
+        We introduce <strong>SoftAct</strong>, a framework for teaching soft robot hands to perform human-like manipulation skills by explicitly reasoning about contact forces. Leveraging immersive virtual reality, our system captures rich human demonstrations, including hand kinematics, object motion, dense contact patches, and detailed contact force information. Unlike conventional approaches that retarget human joint trajectories, SoftAct employs a two-stage, force-aware retargeting algorithm. The first stage attributes demonstrated contact forces to individual human fingers and allocates robot fingers proportionally, establishing a force-balanced mapping between human and robot hands. The second stage performs online retargeting by combining baseline end-effector pose tracking with geodesic-weighted contact refinements, using contact geometry and force magnitude to adjust robot fingertip targets in real time. This formulation enables soft robotic hands to reproduce the functional intent of human demonstrations while naturally accommodating extreme embodiment mismatch and nonlinear compliance. We evaluate SoftAct on a suite of contact-rich manipulation tasks using a custom non-anthropomorphic pneumatic soft robot hand. SoftAct's controller reduces fingertip trajectory tracking RMSE by up to <strong>55%</strong> and reduces tracking variance by up to <strong>69%</strong> compared to kinematic and learning-based baselines. At the policy level, SoftAct achieves consistently higher success in zero-shot real-world deployment and in simulation.
       </div>
     </div>
   </section>
 
+  <!-- ══════════ METHOD ══════════ -->
   <section id="method" class="section is-light-alt">
-    <div class="container" style="max-width: 900px;">
+    <div class="container" style="max-width:960px;">
       <h2 class="section-heading">Method</h2>
       <div class="section-divider"></div>
 
-      <div class="card clean">
-        <div class="card-content content">
-          <h3 style="font-weight: 600; color: #1a1a2e; margin-bottom: 1rem;">Two-Stage Retargeting</h3>
-          <ul style="line-height: 1.8;">
-            <li><strong>Stage 1: Force-balanced finger assignment.</strong> Demonstrated contact forces are attributed to human fingers and redistributed to robot fingers to construct a force-balanced mapping.</li>
-            <li><strong>Stage 2: Contact-informed refinement.</strong> During execution, fingertip targets are adjusted online using geodesic-weighted contact influence to improve contact consistency under morphology mismatch.</li>
-          </ul>
+      <!-- Pipeline Overview -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <img src="assets/figures/front-1.png"
+               alt="SoftAct system overview: VR demonstration, force-aware retargeting, soft robot deployment"
+               style="max-width:100%;border-radius:6px;" />
         </div>
       </div>
 
-      <div class="card clean" style="margin-top: 1.5rem;">
+      <!-- Data Collection -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
         <div class="card-content content">
-          <h3 style="font-weight: 600; color: #1a1a2e; margin-bottom: 1rem;">Low-Level Soft-Hand Control</h3>
-          <p>
-            SoftAct uses a learned low-level controller to convert desired fingertip displacements into pneumatic chamber pressures. This improves precision and stability for nonlinear soft-finger actuation and supports robust policy rollout.
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;">Data Collection in Virtual Reality</h3>
+          <p style="line-height:1.75;">
+            Demonstrations are captured using an OptiTrack motion capture system (10 cameras, 24 markers) mapped to a kinematic hand model inside an Unreal Engine VR environment. At every timestep we record the tuple
+            <span class="tag-pill">(B<sub>t</sub>, V<sub>t</sub>, C<sub>t</sub>)</span>
+            — hand body pose, object velocity, and the full contact set.
+            Each contact in <em>C<sub>t</sub></em> contains a surface location <em>c ∈ ℝ³</em> and a force vector <em>f ∈ ℝ³</em>.
+            Collecting in simulation yields precise, noise-free contact measurements that are difficult to obtain in the real world.
+          </p>
+          <p style="font-size:0.88rem;color:#555;margin:0;">
+            The goal is to learn a robot control policy <em>π(a<sub>t</sub> | o<sub>t</sub>)</em> that achieves functionally equivalent object interactions, using the rich contact and force information captured during human demonstration.
+          </p>
+        </div>
+      </div>
+
+      <!-- Fig. 4 — Task demonstration frames -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <img src="assets/figures/tasks-1.png"
+               alt="Figure 4: Example frames from each manipulation task captured in VR"
+               style="max-width:100%;border-radius:6px;" />
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            <strong>Fig. 4.</strong> Example frames from the six manipulation tasks captured in the VR environment:
+            bulb insertion, bulb screwing, cup pouring, marker grasping, bottle unscrewing, and box reorienting.
+          </p>
+        </div>
+      </div>
+
+      <!-- human_demonstrations video -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <video autoplay loop muted playsinline controls style="max-width:100%;border-radius:6px;">
+            <source src="assets/human_demonstrations.mp4" type="video/mp4" />
+          </video>
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            Human demonstrations across the six manipulation tasks, captured in VR with contact force heatmaps overlaid on the hand.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stage 1 -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;">
+            <span class="stage-badge">Stage 1</span> Force-Balanced Finger Assignment
+          </h3>
+          <p style="line-height:1.75;">
+            Contact information must propagate along the hand surface, not through free space — Euclidean distance would incorrectly couple physically unrelated regions.
+            We measure surface distances using <strong>mesh geodesics</strong> and diffuse contact forces over the hand mesh with a <strong>geodesic heat kernel</strong>: each vertex accumulates a heat value weighted by nearby contact force magnitudes and geodesic proximity.
+          </p>
+          <p style="line-height:1.75;margin-top:0.75rem;">
+            Heat values are summed within each skeleton finger region to estimate the total contact load per finger. Robot fingers are then allocated by solving a <strong>minimax assignment</strong> — distributing load as evenly as possible across the available robot fingers, allowing many-to-one mappings that remain fixed throughout execution.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;">
+            <span class="stage-badge" style="background:#1d5db8;">Stage 2</span> Contact-Informed Refinement
+          </h3>
+          <p style="line-height:1.75;">
+            During execution each soft finger tracks its assigned human fingertip while incorporating local contact geometry.
+            Each demonstrated contact contributes a <strong>geodesic-weighted influence</strong> based on surface proximity and force magnitude.
+            The fingertip target is then adjusted by the force-weighted mean displacement toward nearby contacts, clamped to a maximum step size, producing contact-informed trajectories used for imitation learning.
+          </p>
+        </div>
+      </div>
+
+      <!-- Fig. 4 -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <img src="assets/figures/tasks-1.png"
+               alt="Figure 4: Average contact force distribution and demonstration frames for each task"
+               style="max-width:100%;border-radius:6px;" />
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            <strong>Fig. 4.</strong> (Left) Average contact force distribution on the human hand for each task.
+            Warmer colors indicate higher contact load. (Right) Representative demonstration frames from the VR environment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Soft Robot Hardware -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;">Soft Robot Hand</h3>
+          <p style="line-height:1.75;">
+            We use a custom <strong>non-anthropomorphic pneumatic soft robot hand</strong> with four three-chambered fingers arranged in a square configuration.
+            Each finger is fabricated from elastomer with embedded rigid rings, and bends via differential pressurization of its three chambers — producing planar constant-curvature deformation.
+            The hand mounts on a 7-DoF robot arm and is driven by a pneumatic pressure controller.
+          </p>
+          <div class="columns" style="margin-top:1rem;">
+            <div class="column">
+              <video autoplay loop muted playsinline controls style="width:100%;border-radius:6px;">
+                <source src="assets/soft_robot_design_1.mp4" type="video/mp4" />
+              </video>
+              <p style="font-size:0.81rem;color:#666;margin-top:0.4rem;text-align:center;">Single Finger Module: elastomer body, rigid rings, and three-chamber pressurization.</p>
+            </div>
+            <div class="column">
+              <video autoplay loop muted playsinline controls style="width:100%;border-radius:6px;">
+                <source src="assets/soft_robot_simulation.mp4" type="video/mp4" />
+              </video>
+              <p style="font-size:0.81rem;color:#666;margin-top:0.4rem;text-align:center;">Simulation model: virtual spine structure with torque-driven actuation used for policy training.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low-Level Controller -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;">Low-Level Pressure Controller</h3>
+          <p style="line-height:1.75;">
+            Pressure–deformation relationships in soft fingers are highly nonlinear and vary across the workspace.
+            We learn a per-finger <strong>forward kinematic MLP</strong> mapping chamber pressures to fingertip displacement, then invert it at runtime via gradient descent to find the pressures that achieve a desired tip position.
+            Actuator limits are enforced with a sigmoid reparameterization, and each solve is warm-started from the previous solution.
+            This yields significantly more accurate tracking than direct prediction baselines.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ RETARGETING VISUALIZATION ══════════ -->
+  <section id="retargeting-viz" class="section is-white-alt">
+    <div class="container" style="max-width:980px;">
+      <h2 class="section-heading">Retargeting Scene Visualization</h2>
+      <div class="section-divider"></div>
+
+      <p class="rv-stage-hint has-text-centered" style="margin-bottom:1.25rem;">
+        Select a task and a retargeting stage to see the 3D scene at the key frame with maximum contact density.
+        <strong>Drag</strong> to orbit · <strong>Scroll</strong> to zoom.
+      </p>
+
+      <!-- Stage tabs -->
+      <div class="rv-stage-bar">
+        <button class="rv-stage-btn active" data-stage="demo">
+          <span style="display:block;font-size:1.1em;margin-bottom:0.1em;">🎥</span>Demo Frame
+        </button>
+        <button class="rv-stage-btn" data-stage="stage1">
+          <span style="display:block;font-size:1.1em;margin-bottom:0.1em;">1️⃣</span>Stage 1: Assignment
+        </button>
+        <button class="rv-stage-btn" data-stage="stage2">
+          <span style="display:block;font-size:1.1em;margin-bottom:0.1em;">2️⃣</span>Stage 2: Refinement
+        </button>
+        <button class="rv-stage-btn" data-stage="full">
+          <span style="display:block;font-size:1.1em;margin-bottom:0.1em;">🤖</span>Full SoftAct
+        </button>
+      </div>
+
+      <!-- Task pills -->
+      <div class="rv-task-bar">
+        <button class="rv-task-btn active" data-task="insertion">💡 Bulb Insertion</button>
+        <button class="rv-task-btn" data-task="twisting">🔄 Bulb Twisting</button>
+        <button class="rv-task-btn" data-task="pouring">☕ Cup Pouring</button>
+        <button class="rv-task-btn" data-task="grabbing">✏️ Marker Grabbing</button>
+        <button class="rv-task-btn" data-task="unscrewing">🍶 Bottle Unscrewing</button>
+        <button class="rv-task-btn" data-task="reorienting">📦 Box Reorienting</button>
+      </div>
+
+      <!-- 3D view (Three.js WebGL — proper depth; orbit any angle) -->
+      <div class="retarget-canvas-wrap">
+        <div id="retarget-three-host"></div>
+      </div>
+
+      <!-- Description -->
+      <div class="rv-desc-box" id="retarget-desc">
+        Select a task above to see the contact force analysis.
+      </div>
+
+      <!-- Stage descriptions -->
+      <div class="columns is-multiline" style="margin-top:1.25rem;">
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem;">
+                <span class="stage-badge">Demo</span> Human Key Frame
+              </p>
+              <p style="font-size:0.83rem;line-height:1.6;color:#555;">
+                Human hand point cloud at the timestep with peak contact density.
+                Color encodes contact force magnitude from the geodesic heat kernel
+                <em>h<sup>t</sup><sub>v</sub></em>. Bright yellow markers show individual
+                contact force locations and their magnitudes.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem;">
+                <span class="stage-badge" style="background:#1d5db8;">Stage 1</span> Finger Assignment
+              </p>
+              <p style="font-size:0.83rem;line-height:1.6;color:#555;">
+                Dashed colored lines connect human fingertips to their assigned robot fingers.
+                Each color group shows which human finger regions are covered by a single robot finger,
+                based on the minimax load-balancing optimization.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem;">
+                <span class="stage-badge" style="background:#0f5132;">Stage 2</span> Contact Refinement
+              </p>
+              <p style="font-size:0.83rem;line-height:1.6;color:#555;">
+                Colored arrows show the geodesic-weighted adjustment <em>δ<sub>i</sub></em>
+                applied to each robot fingertip. The arrow direction and magnitude reflect
+                the contact-informed correction that aligns the robot's contact surface
+                with the demonstrated contact geometry.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem;">
+                <span class="stage-badge" style="background:#5a2d82;">Full SoftAct</span> Final Policy
+              </p>
+              <p style="font-size:0.83rem;line-height:1.6;color:#555;">
+                The soft robot hand in its final retargeted configuration, ready for
+                policy execution. The three-chambered soft fingers (shown with chamber
+                color coding) are positioned to reproduce the functional intent of the
+                human demonstration despite extreme morphological mismatch.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ RETARGETING VIDEO ══════════ -->
+  <section class="section is-light-alt" style="padding-top:1rem;padding-bottom:2rem;">
+    <div class="container" style="max-width:960px;">
+      <div class="card clean">
+        <div class="card-content" style="text-align:center;">
+          <video autoplay loop muted playsinline controls style="max-width:100%;border-radius:6px;">
+            <source src="assets/retargetting_stages.mp4" type="video/mp4" />
+          </video>
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            <strong>Retargeting stages.</strong> From recorded contact forces on the demonstrator hand (left),
+            through kinematic retargeting with soft fingers, to the contact-informed SoftAct refinement and final real-robot execution (right).
           </p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ EVALUATION ══════════ -->
   <section id="evaluation" class="section is-white-alt">
-    <div class="container" style="max-width: 900px;">
-      <h2 class="section-heading">Evaluation & Results</h2>
+    <div class="container" style="max-width:960px;">
+      <h2 class="section-heading">Evaluation &amp; Results</h2>
       <div class="section-divider"></div>
 
+      <!-- Low-level tracking video -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <video autoplay loop muted playsinline controls style="max-width:100%;border-radius:6px;">
+            <source src="assets/lowlevel_controller.mp4" type="video/mp4" />
+          </video>
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            <strong>Low-Level Trajectory Tracking.</strong> SoftAct achieves the lowest RMSE (2.28 mm) across planar reference trajectories compared to Direct KNN, MLP, and Linear baselines.
+          </p>
+        </div>
+      </div>
+
+      <!-- Table II -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.25rem;">Table II — Object Trajectory Tracking (Simulation)</h3>
+          <p style="font-size:0.85rem;color:#555;margin-bottom:1rem;">Translational (m) and rotational (°) error vs. ground-truth demonstrations. Lower is better. Bold = best per task.</p>
+          <div class="results-table-wrap">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Method</th>
+                  <th>Pos. (m)</th>
+                  <th>Rot. (°)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="task-group"><td colspan="4">Light Bulb Insertion</td></tr>
+                <tr><td>Kinematic</td><td></td><td>1.52 ± 0.61</td><td>11.8 ± 3.4</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.97 ± 0.42</td><td>25.1 ± 7.9</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.48 ± 0.21</td><td class="best">12.4 ± 8.1</td></tr>
+
+                <tr class="task-group"><td colspan="4">Light Bulb Twisting</td></tr>
+                <tr><td>Kinematic</td><td></td><td>0.05 ± 0.07</td><td>18.2 ± 6.5</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.07 ± 0.03</td><td>9.4 ± 3.4</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.02 ± 0.005</td><td class="best">2.9 ± 1.3</td></tr>
+
+                <tr class="task-group"><td colspan="4">Cup Pouring</td></tr>
+                <tr><td>Kinematic</td><td></td><td>1.29 ± 0.50</td><td>12.5 ± 4.1</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.81 ± 0.35</td><td>6.4 ± 2.2</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.51 ± 0.21</td><td class="best">3.5 ± 1.3</td></tr>
+
+                <tr class="task-group"><td colspan="4">Marker Grasping</td></tr>
+                <tr><td>Kinematic</td><td></td><td>0.97 ± 0.41</td><td>14.3 ± 5.0</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.56 ± 0.25</td><td>7.3 ± 2.5</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.31 ± 0.13</td><td class="best">3.9 ± 1.5</td></tr>
+
+                <tr class="task-group"><td colspan="4">Bottle Unscrewing</td></tr>
+                <tr><td>Kinematic</td><td></td><td>0.26 ± 0.11</td><td>21.3 ± 7.2</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.11 ± 0.05</td><td>11.1 ± 3.8</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.07 ± 0.12</td><td class="best">6.7 ± 2.6</td></tr>
+
+                <tr class="task-group"><td colspan="4">Box Reorienting</td></tr>
+                <tr><td>Kinematic</td><td></td><td>1.34 ± 0.54</td><td>17.6 ± 6.0</td></tr>
+                <tr><td>SoftAct-stage 2 only</td><td></td><td>0.89 ± 0.37</td><td>9.0 ± 3.1</td></tr>
+                <tr><td><strong>SoftAct (Ours)</strong></td><td></td><td class="best">0.62 ± 0.26</td><td class="best">5.1 ± 2.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-world results: video + figure -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content">
+          <video autoplay loop muted playsinline controls style="max-width:100%;border-radius:6px;display:block;margin:0 auto;">
+            <source src="assets/policy_rollout_real.mp4" type="video/mp4" />
+          </video>
+          <div style="margin-top:1rem;">
+            <img src="assets/figures/realworld.png"
+                 alt="Real-world policy rollouts on the soft robot hand"
+                 style="max-width:100%;border-radius:6px;" />
+          </div>
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;text-align:center;">
+            <strong>Real-world rollouts.</strong> SoftAct policy executing paper cup pouring, box reorientation,
+            and light bulb screwing on the physical soft robot hand. Zero-shot transfer from simulation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Qualitative comparison figure -->
+      <div class="card clean" style="margin-bottom:1.5rem;">
+        <div class="card-content" style="text-align:center;">
+          <img src="assets/figures/retarget.png"
+               alt="Qualitative comparison: VR demonstration vs Kinematic Retargeting vs SoftAct"
+               style="max-width:100%;border-radius:6px;" />
+          <p style="font-size:0.82rem;color:#666;margin-top:0.6rem;line-height:1.5;">
+            <strong>Qualitative comparison.</strong> Task progression frames for (top) the virtual human demonstration,
+            (middle) kinematic retargeting baseline, and (bottom) SoftAct. SoftAct achieves more natural
+            contact configurations that better replicate the functional intent of the human demonstration.
+          </p>
+        </div>
+      </div>
+
+      <!-- Table III -->
       <div class="card clean">
-        <div class="card-content content">
-          <h3 style="font-weight: 600; color: #1a1a2e; margin-bottom: 1.25rem;">Key Results from the Paper</h3>
-          <ul class="metric-list">
-            <li>Low-level soft-finger trajectory tracking RMSE is reduced by up to <strong>55%</strong> versus the strongest baseline, with variance reduced by up to <strong>69%</strong>.</li>
-            <li>Object trajectory tracking in simulation shows substantial gains, with translational error reductions of roughly <strong>55-75%</strong> and rotational improvements up to <strong>80%</strong> versus kinematic retargeting.</li>
-            <li>In simulation, policy success improves strongly across tasks, including: paper cup pouring <strong>90% vs 40%</strong>, box reorienting <strong>90% vs 30%</strong>, and light bulb insertion <strong>47% vs 0%</strong>.</li>
-            <li>In zero-shot real-world deployment, SoftAct outperforms kinematic baselines: paper cup pouring <strong>85% vs 35%</strong>, light bulb screwing <strong>95% vs 30%</strong>, and box reorienting <strong>70% vs 10%</strong>.</li>
-          </ul>
+        <div class="card-content">
+          <h3 style="font-weight:700;color:#1a1a2e;margin-bottom:0.25rem;">Table III — Task Success Rates</h3>
+          <p style="font-size:0.85rem;color:#555;margin-bottom:1rem;">30 rollouts (simulation) / 20 rollouts (real world) per method per task. Higher is better.</p>
+          <div class="results-table-wrap">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Domain</th>
+                  <th>SoftAct</th>
+                  <th>Kinematic Baseline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Paper Cup Pouring</td><td>Simulation</td><td class="best">90%</td><td>40%</td></tr>
+                <tr><td>Light Bulb Insertion</td><td>Simulation</td><td class="best">47%</td><td>0%</td></tr>
+                <tr><td>Marker Grasping</td><td>Simulation</td><td class="best">97%</td><td>73%</td></tr>
+                <tr><td>Bottle Unscrewing</td><td>Simulation</td><td class="best">80%</td><td>47%</td></tr>
+                <tr><td>Box Reorienting</td><td>Simulation</td><td class="best">90%</td><td>30%</td></tr>
+                <tr><td>Light Bulb Screwing</td><td>Simulation</td><td class="best">100%</td><td>77%</td></tr>
+                <tr style="border-top:2px solid #c7d2fe;"><td>Paper Cup Pouring</td><td><strong>Real World</strong></td><td class="best">85%</td><td>35%</td></tr>
+                <tr><td>Light Bulb Screwing</td><td><strong>Real World</strong></td><td class="best">95%</td><td>30%</td></tr>
+                <tr><td>Box Reorienting</td><td><strong>Real World</strong></td><td class="best">70%</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ SUPPLEMENTAL ══════════ -->
   <section id="supplemental" class="section is-light-alt">
-    <div class="container" style="max-width: 900px;">
+    <div class="container" style="max-width:900px;">
       <h2 class="section-heading">Supplemental Video</h2>
       <div class="section-divider"></div>
 
-      <div class="media-container" style="max-width: 90%; margin: 0 auto;">
-        <video controls preload="metadata" style="width: 100%;">
+      <div class="media-container" style="max-width:90%;margin:0 auto;">
+        <video controls preload="metadata" style="width:100%;">
           <source src="assets/website_supp.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
 
-      <div class="card clean" style="margin-top: 1.5rem;">
+      <div class="card clean" style="margin-top:1.5rem;">
         <div class="card-content content">
-          <p>
-            
+          <p style="line-height:1.75;">
+            The supplemental video shows zero-shot real-world policy rollouts for <strong>paper cup pouring</strong>, <strong>box reorientation</strong>, and <strong>light bulb screwing</strong> using the full SoftAct pipeline. It also includes side-by-side comparisons against the kinematic retargeting baseline and qualitative visualizations of contact force distributions across tasks.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ CITATION ══════════ -->
   <section id="citation" class="section is-white-alt">
-    <div class="container" style="max-width: 900px;">
+    <div class="container" style="max-width:900px;">
       <h2 class="section-heading">Citation</h2>
       <div class="section-divider"></div>
-
       <div class="card clean">
         <div class="card-content">
-          <pre style="background: #1e1e2e; color: #cdd6f4; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6;">@inproceedings{softact2026,
+          <pre class="citation-pre">@inproceedings{softact2026,
   title={Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies},
-  author={Yoo, Uksang and Zhu, Mengjia and Pezent, Evan and Preechayasomboon, Jom and Oh, Jean and Ichnowski, Jeffrey and Memar, Amir and Abbatematteo, Ben and Bharadhwaj, Homanga and Deshpande, Ashish and Prahlad, Harsha},
+  author={Yoo, Uksang and Zhu, Mengjia and Pezent, Evan and Preechayasomboon, Jom
+          and Oh, Jean and Ichnowski, Jeffrey and Memar, Amir and Abbatematteo, Ben
+          and Bharadhwaj, Homanga and Deshpande, Ashish and Prahlad, Harsha},
   year={2026}
 }</pre>
         </div>
@@ -576,58 +889,464 @@
 
   <footer class="footer">
     <div class="content has-text-centered">
-      <p><strong>SoftAct</strong> - Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies</p>
+      <p><strong style="color:rgba(255,255,255,.85);">SoftAct</strong> — Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies</p>
+      <p style="font-size:0.82rem;margin-top:0.5rem;">Carnegie Mellon University &amp; Meta</p>
     </div>
   </footer>
 
-  <script>
-    document.addEventListener("scroll", function() {
-      var scrollTop = window.scrollY;
-      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      var progress = document.querySelector(".page-progress-bar-fill");
-      if (progress) {
-        progress.style.width = scrollPercent + "%";
-      }
-    });
+  <!-- Retargeting visualization -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="assets/retarget-viz-webgl.mjs"></script>
 
-    function updateNavbarOnScroll() {
-      var navbar = document.querySelector(".navbar");
-      var hero = document.getElementById("top");
-      if (!navbar || !hero) {
+  <script>
+  // ── Scroll progress ──────────────────────────────────────────────────────────
+  document.addEventListener("scroll", function() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    var bar = document.querySelector(".page-progress-bar-fill");
+    if (bar) bar.style.width = pct + "%";
+  });
+
+  // ── Navbar transparency over hero ────────────────────────────────────────────
+  function updateNavbarOnScroll() {
+    var navbar = document.querySelector(".navbar");
+    var hero = document.getElementById("top");
+    if (!navbar || !hero) return;
+    if (window.scrollY < hero.offsetHeight - 100) {
+      navbar.classList.add("navbar-over-video");
+    } else {
+      navbar.classList.remove("navbar-over-video");
+    }
+  }
+  window.addEventListener("scroll", updateNavbarOnScroll);
+  updateNavbarOnScroll();
+
+  // ── Burger menu ──────────────────────────────────────────────────────────────
+  var burger = document.querySelector(".navbar-burger");
+  var menu = document.getElementById("mainNav");
+  if (burger && menu) {
+    burger.addEventListener("click", function() {
+      burger.classList.toggle("is-active");
+      menu.classList.toggle("is-active");
+    });
+  }
+
+  // ── Scroll indicator ─────────────────────────────────────────────────────────
+  var scrollBtn = document.getElementById("scroll-indicator-btn");
+  if (scrollBtn) {
+    scrollBtn.addEventListener("click", function() {
+      var t = document.getElementById("abstract");
+      if (t) t.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  (function() {
+    var canvas = document.getElementById("contact-cloud-canvas-REMOVED");
+    if (!canvas) return;
+    var currentTask = "insertion";
+    var pts = [];
+    var targetHeat = [];
+    var currentHeat = [];
+    var rotX = 0.25, rotY = 0.3;
+    var isDragging = false, lastMX = 0, lastMY = 0;
+    var autoRotate = true;
+    var sceneData = null;
+    var offsetData = null;
+    var heatViewSpan = 12;
+
+    function buildHandFromExport(task) {
+      if (!sceneData || !sceneData.tasks[task]) return false;
+      var ex = sceneData.tasks[task];
+      heatViewSpan = ex.viewSpan && ex.viewSpan > 0.08 ? ex.viewSpan : 12;
+      if (ex.camRot && ex.camRot.length >= 2) {
+        rotX = ex.camRot[0];
+        rotY = ex.camRot[1];
+      }
+      var sv = ex.skinnedVertices;
+      var heat = ex.vertexHeat;
+
+      // Apply handScale around hand centroid
+      var handScale = 1.0;
+      if (offsetData && offsetData.tasks && offsetData.tasks[task]) {
+        var off = offsetData.tasks[task];
+        if (off.handScale != null) handScale = off.handScale;
+      }
+      var cx = 0, cy = 0, cz = 0;
+      if (handScale !== 1.0) {
+        for (var j = 0; j < sv.length; j++) { cx += sv[j][0]; cy += sv[j][1]; cz += sv[j][2]; }
+        cx /= sv.length; cy /= sv.length; cz /= sv.length;
+      }
+
+      pts = [];
+      targetHeat = [];
+      for (var i = 0; i < sv.length; i++) {
+        var vx = handScale === 1.0 ? sv[i][0] : (sv[i][0]-cx)*handScale+cx;
+        var vy = handScale === 1.0 ? sv[i][1] : (sv[i][1]-cy)*handScale+cy;
+        var vz = handScale === 1.0 ? sv[i][2] : (sv[i][2]-cz)*handScale+cz;
+        pts.push({ x: vx, y: vy, z: vz });
+        targetHeat.push(heat[i] || 0);
+      }
+      currentHeat = targetHeat.slice();
+      return true;
+    }
+
+    function setTask(task) {
+      currentTask = task;
+      if (!buildHandFromExport(task)) {
+        pts = [];
+        targetHeat = [];
+        currentHeat = [];
+      }
+    }
+
+    function heatColor(h) {
+      h = Math.max(0, Math.min(1, h));
+      var r, g, b;
+      if (h < 0.25)      { r = 0;                        g = h * 4;            b = 1; }
+      else if (h < 0.5)  { r = 0;                        g = 1;                b = 1 - (h - 0.25) * 4; }
+      else if (h < 0.75) { r = (h - 0.5) * 4;            g = 1;                b = 0; }
+      else               { r = 1;                         g = 1-(h-0.75)*4;     b = 0; }
+      return [Math.round(r*255), Math.round(g*255), Math.round(b*255)];
+    }
+
+    function project(x, y, z, W, H) {
+      var cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+      var x1 = x * cosY - z * sinY;
+      var z1 = x * sinY + z * cosY;
+      var cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+      var y1 = y * cosX - z1 * sinX;
+      var z2 = y * sinX + z1 * cosX;
+      var fov = 440;
+      var sc = fov / (fov + z2 + 4.35);
+      var pxScale = 108 * (5.6 / (heatViewSpan + 2.4));
+      pxScale = Math.max(76, Math.min(128, pxScale));
+      return { px: W/2 + x1 * sc * pxScale, py: H/2 - y1 * sc * pxScale + 18, z: z2, sc: sc };
+    }
+
+    function drawLegend(W, H) {
+      var lh = 80, lw = 14;
+      var lx = W - 46, ly = H/2 - lh/2;
+      var g = ctx.createLinearGradient(0, ly, 0, ly + lh);
+      g.addColorStop(0,    "rgb(255,0,0)");
+      g.addColorStop(0.33, "rgb(255,220,0)");
+      g.addColorStop(0.67, "rgb(0,220,80)");
+      g.addColorStop(1,    "rgb(30,80,255)");
+      ctx.fillStyle = g;
+      ctx.fillRect(lx, ly, lw, lh);
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(lx, ly, lw, lh);
+      ctx.fillStyle = "rgba(255,255,255,0.65)";
+      ctx.font = "10px 'Google Sans',sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("High", lx - 3, ly + 8);
+      ctx.fillText("Low",  lx - 3, ly + lh + 1);
+      ctx.save();
+      ctx.translate(lx - 3, ly + lh/2);
+      ctx.rotate(-Math.PI/2);
+      ctx.textAlign = "center";
+      ctx.fillText("Force", 0, 0);
+      ctx.restore();
+    }
+
+    function render() {
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.getBoundingClientRect();
+      var W = rect.width, H = rect.height;
+      if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.scale(dpr, dpr);
+      }
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#0f1117";
+      ctx.fillRect(0, 0, W, H);
+
+      if (pts.length === 0) {
+        ctx.fillStyle = "rgba(255,255,255,0.4)";
+        ctx.font = "13px 'Google Sans',sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Loading hand contact data…", W/2, H/2);
+        drawLegend(W, H);
         return;
       }
 
-      var heroBottom = hero.offsetHeight;
-      var scrollTop = window.scrollY;
-      if (scrollTop < heroBottom - 100) {
-        navbar.classList.add("navbar-over-video");
-      } else {
-        navbar.classList.remove("navbar-over-video");
+      for (var i = 0; i < currentHeat.length; i++) {
+        currentHeat[i] += (targetHeat[i] - currentHeat[i]) * 0.12;
+      }
+
+      var projected = pts.map(function(p, i) {
+        var pr = project(p.x, p.y, p.z, W, H);
+        return { px: pr.px, py: pr.py, z: pr.z, sc: pr.sc, h: currentHeat[i] };
+      });
+      projected.sort(function(a, b) { return b.z - a.z; });
+
+      for (var j = 0; j < projected.length; j++) {
+        var p = projected[j];
+        var rc = Math.max(1.0, 2.4 * p.sc);
+        var col = heatColor(p.h);
+        var alpha = 0.5 + p.h * 0.42;
+        ctx.beginPath();
+        ctx.arc(p.px, p.py, rc, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + col[0] + "," + col[1] + "," + col[2] + "," + alpha + ")";
+        ctx.fill();
+      }
+
+      drawLegend(W, H);
+      ctx.fillStyle = "rgba(255,255,255,0.35)";
+      ctx.font = "10px 'Google Sans',sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("Drag to rotate · geodesic force heat at peak-contact frame", 10, H - 10);
+    }
+
+    function frame() {
+      if (!isDragging && autoRotate) rotY += 0.004;
+      render();
+      requestAnimationFrame(frame);
+    }
+
+    canvas.addEventListener("mousedown", function(e) {
+      isDragging = true; autoRotate = false;
+      lastMX = e.clientX; lastMY = e.clientY;
+    });
+    document.addEventListener("mouseup", function() { isDragging = false; });
+    canvas.addEventListener("mousemove", function(e) {
+      if (!isDragging) return;
+      rotY += (e.clientX - lastMX) * 0.012;
+      rotX += (e.clientY - lastMY) * 0.012;
+      lastMX = e.clientX; lastMY = e.clientY;
+    });
+    canvas.addEventListener("touchstart", function(e) {
+      isDragging = true; autoRotate = false;
+      lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener("touchend", function() { isDragging = false; });
+    canvas.addEventListener("touchmove", function(e) {
+      if (!isDragging) return;
+      rotY += (e.touches[0].clientX - lastMX) * 0.012;
+      rotX += (e.touches[0].clientY - lastMY) * 0.012;
+      lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.getElementById("task-selector").addEventListener("click", function(e) {
+      var btn = e.target.closest(".task-btn");
+      if (!btn) return;
+      document.querySelectorAll(".task-btn").forEach(function(b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      setTask(btn.dataset.task);
+    });
+
+    function onScenesLoaded(ev) {
+      sceneData = ev.detail || window.SOFTACT_SCENES;
+      setTask(currentTask);
+    }
+    document.addEventListener("softact-scenes-loaded", onScenesLoaded);
+    fetch("assets/data/object-pose-offsets.json").then(function(r) { return r.json(); }).then(function(d) {
+      offsetData = d;
+    }).catch(function() {});
+    fetch("assets/data/softact-scenes.json").then(function(r) { return r.json(); }).then(function(d) {
+      sceneData = d;
+      setTask(currentTask);
+    }).catch(function() {});
+    frame();
+  })();
+
+  (function() {
+    var canvas = document.getElementById("traj-canvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var currentShape = "circle";
+    var animFrame = 0;
+    var totalFrames = 220;
+    var paths = {};
+
+    function seededRand(seed) {
+      var x = Math.sin(seed + 1) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    function getRef(shape, W, H, n) {
+      var cx = W / 2, cy = H / 2 - 10;
+      var r = Math.min(W, H) * 0.21;
+      var pts = [];
+      for (var i = 0; i < n; i++) {
+        var t = i / n;
+        var x, y;
+        if (shape === "circle") {
+          var a = t * Math.PI * 2 - Math.PI / 2;
+          x = cx + r * Math.cos(a); y = cy + r * Math.sin(a);
+        } else if (shape === "square") {
+          var s4 = t * 4;
+          var s = Math.floor(s4), f2 = s4 - s;
+          if (s === 0)      { x = cx - r + f2*2*r; y = cy - r; }
+          else if (s === 1) { x = cx + r; y = cy - r + f2*2*r; }
+          else if (s === 2) { x = cx + r - f2*2*r; y = cy + r; }
+          else              { x = cx - r; y = cy + r - f2*2*r; }
+        } else if (shape === "triangle") {
+          var s3 = t * 3, si = Math.floor(s3), fi = s3 - si;
+          var corners = [
+            { x: cx, y: cy - r },
+            { x: cx + r*0.866, y: cy + r*0.5 },
+            { x: cx - r*0.866, y: cy + r*0.5 }
+          ];
+          var from = corners[si % 3], to = corners[(si+1) % 3];
+          x = from.x + fi*(to.x - from.x); y = from.y + fi*(to.y - from.y);
+        } else { // rectangle
+          var rw = r*1.45, rh = r*0.68;
+          var s4r = t * 4, sr = Math.floor(s4r), fr = s4r - sr;
+          if (sr === 0)      { x = cx - rw + fr*2*rw; y = cy - rh; }
+          else if (sr === 1) { x = cx + rw; y = cy - rh + fr*2*rh; }
+          else if (sr === 2) { x = cx + rw - fr*2*rw; y = cy + rh; }
+          else               { x = cx - rw; y = cy + rh - fr*2*rh; }
+        }
+        pts.push({ x: x, y: y });
+      }
+      return pts;
+    }
+
+    function addNoise(ref, noiseAmp, driftAmp, spikePct, seed) {
+      var driftX = 0, driftY = 0;
+      return ref.map(function(p, i) {
+        var s1 = seededRand(seed * 1000 + i * 7);
+        var s2 = seededRand(seed * 1000 + i * 13 + 3);
+        var s3 = seededRand(seed * 1000 + i * 17 + 5);
+        var s4 = seededRand(seed * 1000 + i * 23 + 9);
+        driftX = driftX * 0.93 + (s1 - 0.5) * driftAmp * 0.5;
+        driftY = driftY * 0.93 + (s2 - 0.5) * driftAmp * 0.5;
+        var spike = s3 < spikePct ? (s4 - 0.5) * noiseAmp * 5 : 0;
+        return {
+          x: p.x + driftX + (s1 - 0.5) * noiseAmp + spike,
+          y: p.y + driftY + (s2 - 0.5) * noiseAmp * 0.85 + spike * 0.7
+        };
+      });
+    }
+
+    function buildPaths(W, H) {
+      var N = 120;
+      var ref = getRef(currentShape, W, H, N);
+      paths = {
+        ref:    ref,
+        softact: addNoise(ref, 3,   0,    0,     1),
+        linear:  addNoise(ref, 9,   6,    0,     2),
+        mlp:     addNoise(ref, 13,  5,    0.012, 3),
+        knn:     addNoise(ref, 18,  8,    0.055, 4),
+      };
+      animFrame = 0;
+    }
+
+    function drawPath(pts, color, dashed, prog) {
+      var n = Math.max(2, Math.floor(pts.length * prog));
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = dashed ? 1.75 : 1.85;
+      if (dashed) ctx.setLineDash([5, 4]);
+      else ctx.setLineDash([]);
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (var i = 1; i < n; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function render() {
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.getBoundingClientRect();
+      var W = rect.width, H = rect.height;
+      if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.scale(dpr, dpr);
+        buildPaths(W, H);
+      }
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#0f1117";
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle grid
+      ctx.strokeStyle = "rgba(255,255,255,0.045)";
+      ctx.lineWidth = 1;
+      for (var gx = 0; gx < W; gx += 42) { ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
+      for (var gy = 0; gy < H; gy += 42) { ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+
+      var prog = Math.min(1, animFrame / (totalFrames * 0.82));
+
+      drawPath(paths.ref,     "rgba(255,255,255,0.62)", true,  1);
+      drawPath(paths.knn,     "#f59e0b", false, prog);
+      drawPath(paths.mlp,     "#ef4444", false, prog);
+      drawPath(paths.linear,  "#22c55e", false, prog);
+      drawPath(paths.softact, "#60a5fa", false, prog);
+
+      // Legend
+      var legends = [
+        { color: "rgba(255,255,255,0.55)", label: "Reference",   dash: true },
+        { color: "#60a5fa", label: "SoftAct (RMSE 2.28mm)" },
+        { color: "#22c55e", label: "Linear  (RMSE 5.05mm)" },
+        { color: "#ef4444", label: "Direct MLP (RMSE 6.11mm)" },
+        { color: "#f59e0b", label: "Direct KNN (RMSE 8.74mm)" },
+      ];
+      legends.forEach(function(l, i) {
+        var lx = 12, ly = 14 + i * 21;
+        ctx.beginPath();
+        ctx.strokeStyle = l.color;
+        ctx.lineWidth = 2;
+        if (l.dash) ctx.setLineDash([4, 3]); else ctx.setLineDash([]);
+        ctx.moveTo(lx, ly + 6); ctx.lineTo(lx + 22, ly + 6);
+        ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = "rgba(255,255,255,0.75)";
+        ctx.font = "10.5px 'Google Sans',sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText(l.label, lx + 28, ly + 10);
+      });
+
+      // Start/End dots on reference when done
+      if (prog >= 0.99) {
+        var ref = paths.ref;
+        ctx.beginPath();
+        ctx.arc(ref[0].x, ref[0].y, 4, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255,0.7)"; ctx.fill();
+        ctx.beginPath();
+        ctx.arc(ref[ref.length-1].x, ref[ref.length-1].y, 4, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255,0.4)"; ctx.fill();
       }
     }
 
-    window.addEventListener("scroll", updateNavbarOnScroll);
-    updateNavbarOnScroll();
-
-    var burger = document.querySelector(".navbar-burger");
-    var menu = document.getElementById("mainNav");
-    if (burger && menu) {
-      burger.addEventListener("click", function() {
-        burger.classList.toggle("is-active");
-        menu.classList.toggle("is-active");
-      });
+    function frame() {
+      animFrame++;
+      if (animFrame > totalFrames) {
+        animFrame = 0;
+        var rect = canvas.getBoundingClientRect();
+        buildPaths(rect.width, rect.height);
+      }
+      render();
+      requestAnimationFrame(frame);
     }
 
-    var scrollBtn = document.getElementById("scroll-indicator-btn");
-    if (scrollBtn) {
-      scrollBtn.addEventListener("click", function() {
-        var target = document.getElementById("abstract");
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
+    document.getElementById("shape-selector").addEventListener("click", function(e) {
+      var btn = e.target.closest(".shape-btn");
+      if (!btn) return;
+      document.querySelectorAll(".shape-btn").forEach(function(b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      currentShape = btn.dataset.shape;
+      var rect = canvas.getBoundingClientRect();
+      buildPaths(rect.width, rect.height);
+    });
+
+    // Initial build after layout
+    requestAnimationFrame(function() {
+      var rect = canvas.getBoundingClientRect();
+      buildPaths(rect.width, rect.height);
+      frame();
+    });
+  })();
+
+  // Retargeting viz: booted by assets/retarget-viz-webgl.mjs (deferred module)
   </script>
 </body>
 </html>
