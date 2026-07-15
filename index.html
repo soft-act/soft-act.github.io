@@ -98,6 +98,16 @@
     .hero-teaser-wrap .title.paper-title {
       color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); margin-bottom: 0.5rem;
     }
+    .hero-teaser-wrap .venue-badge {
+      display: inline-block; margin: 0.35rem auto 0.2rem;
+      padding: 0.3rem 0.95rem; border-radius: 20px;
+      background: rgba(50,115,220,0.9); color: #fff;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.01em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+    @media screen and (max-width: 768px) {
+      .hero-teaser-wrap .venue-badge { font-size: 0.78rem; padding: 0.25rem 0.7rem; }
+    }
     .hero-teaser-wrap .author-list {
       color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.5);
       margin-top: 0.6rem; margin-bottom: 0.35rem;
@@ -412,6 +422,7 @@
       <div class="container has-text-centered">
         <div class="hero-teaser-content">
           <h1 class="title paper-title">Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies</h1>
+          <p class="venue-badge">Robotics: Science and Systems (RSS) 2026</p>
           <p class="author-list">Uksang Yoo<sup>1</sup>, Mengjia Zhu<sup>2</sup>, Evan Pezent<sup>2</sup>, Jom Preechayasomboon<sup>2</sup>, Jean Oh<sup>1</sup>, Jeffrey Ichnowski<sup>1</sup>, Amir Memar<sup>2</sup>, Ben Abbatematteo<sup>2</sup>, Homanga Bharadhwaj<sup>2</sup>, Ashish Deshpande<sup>2</sup>, Harsha Prahlad<sup>2</sup></p>
           <p class="affiliation-list"><sup>1</sup> Carnegie Mellon University, Robotics Institute &nbsp;&nbsp; <sup>2</sup> Meta</p>
           <div class="link-buttons">
@@ -777,7 +788,7 @@
           <div class="card clean">
             <div class="card-content" style="text-align:center;">
               <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.5rem;">
-                <span class="stage-badge" style="background:#5a2d82;">Robot Reference Trajectory</span>
+                <span class="stage-badge" style="background:#5a2d82;">Retargeted Trajectory</span>
               </p>
               <div class="media-container">
                 <video id="rr-ref" autoplay loop muted playsinline preload="metadata" style="border-radius:6px;">
@@ -786,7 +797,7 @@
                 </video>
               </div>
               <p style="font-size:0.8rem;color:#666;margin-top:0.5rem;line-height:1.5;">
-                Force-aware retargeted reference trajectory for the non-anthropomorphic pneumatic soft robot hand.
+                Force-aware retargeted trajectory for the non-anthropomorphic pneumatic soft robot hand.
               </p>
             </div>
           </div>
@@ -937,14 +948,13 @@
       <div class="section-divider"></div>
       <div class="card clean">
         <div class="card-content">
-          <pre class="citation-pre">@article{softact2026,
+          <pre class="citation-pre">@inproceedings{softact2026,
   title={Functional Force-Aware Retargeting from Virtual Human Demos to Soft Robot Policies},
   author={Yoo, Uksang and Zhu, Mengjia and Pezent, Evan and Preechayasomboon, Jom
           and Oh, Jean and Ichnowski, Jeffrey and Memar, Amir and Abbatematteo, Ben
           and Bharadhwaj, Homanga and Deshpande, Ashish and Prahlad, Harsha},
+  booktitle={Proceedings of Robotics: Science and Systems (RSS)},
   year={2026},
-  eprint={2604.01224},
-  archivePrefix={arXiv},
 }</pre>
         </div>
       </div>
