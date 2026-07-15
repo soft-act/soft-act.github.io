@@ -390,6 +390,7 @@
         <a class="navbar-item" href="#abstract">Abstract</a>
         <a class="navbar-item" href="#method">Method</a>
         <a class="navbar-item" href="#retargeting-viz">Visualization</a>
+        <a class="navbar-item" href="#retargeting-results">Results</a>
         <a class="navbar-item" href="#evaluation">Evaluation</a>
         <a class="navbar-item" href="#overview">Overview</a>
         <a class="navbar-item" href="#citation">Citation</a>
@@ -731,6 +732,69 @@
     </div>
   </section>
 
+  <!-- ══════════ RETARGETING RESULTS GALLERY ══════════ -->
+  <section id="retargeting-results" class="section is-white-alt">
+    <div class="container" style="max-width:980px;">
+      <h2 class="section-heading">Retargeting Results</h2>
+      <div class="section-divider"></div>
+
+      <p class="has-text-centered" style="margin-bottom:1.25rem;font-size:0.95rem;color:#555;">
+        Select a task to compare the virtual human demonstration with the reference trajectory
+        produced by SoftAct's force-aware retargeting on the soft robot hand.
+      </p>
+
+      <!-- Task pills -->
+      <div class="rv-task-bar" id="rr-task-bar" style="justify-content:center;">
+        <button class="rv-task-btn active" data-task="lightbulb_insertion">💡 Bulb Insertion</button>
+        <button class="rv-task-btn" data-task="lightbulb_screwing">🔄 Bulb Twisting</button>
+        <button class="rv-task-btn" data-task="pouring">☕ Cup Pouring</button>
+        <button class="rv-task-btn" data-task="marker">✏️ Marker Grabbing</button>
+        <button class="rv-task-btn" data-task="bottle">🍶 Bottle Unscrewing</button>
+        <button class="rv-task-btn" data-task="box">📦 Box Reorienting</button>
+      </div>
+
+      <!-- Paired videos -->
+      <div class="columns is-multiline" style="margin-top:0.5rem;">
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content" style="text-align:center;">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.5rem;">
+                <span class="stage-badge">Human Demonstration</span>
+              </p>
+              <div class="media-container">
+                <video id="rr-human" autoplay loop muted playsinline preload="metadata" style="border-radius:6px;">
+                  <source src="assets/retarget_results/retarget_lightbulb_insertion_human.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p style="font-size:0.8rem;color:#666;margin-top:0.5rem;line-height:1.5;">
+                Virtual human demonstration captured in VR, including hand kinematics and contact forces.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="card clean">
+            <div class="card-content" style="text-align:center;">
+              <p style="font-size:0.85rem;font-weight:700;color:#1a1a2e;margin-bottom:0.5rem;">
+                <span class="stage-badge" style="background:#5a2d82;">Robot Reference Trajectory</span>
+              </p>
+              <div class="media-container">
+                <video id="rr-ref" autoplay loop muted playsinline preload="metadata" style="border-radius:6px;">
+                  <source src="assets/retarget_results/retarget_lightbulb_insertion_ref.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p style="font-size:0.8rem;color:#666;margin-top:0.5rem;line-height:1.5;">
+                Force-aware retargeted reference trajectory for the non-anthropomorphic pneumatic soft robot hand.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════ EVALUATION ══════════ -->
   <section id="evaluation" class="section is-white-alt">
     <div class="container" style="max-width:960px;">
@@ -947,6 +1011,29 @@
       if (t) t.scrollIntoView({ behavior: "smooth" });
     });
   }
+
+  // ── Retargeting results gallery ──────────────────────────────────────────────
+  (function() {
+    var bar = document.getElementById("rr-task-bar");
+    var humanVid = document.getElementById("rr-human");
+    var refVid = document.getElementById("rr-ref");
+    if (!bar || !humanVid || !refVid) return;
+
+    function setTask(task) {
+      humanVid.querySelector("source").src = "assets/retarget_results/retarget_" + task + "_human.mp4";
+      refVid.querySelector("source").src = "assets/retarget_results/retarget_" + task + "_ref.mp4";
+      humanVid.load();
+      refVid.load();
+    }
+
+    bar.querySelectorAll(".rv-task-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        bar.querySelectorAll(".rv-task-btn").forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        setTask(btn.getAttribute("data-task"));
+      });
+    });
+  })();
 
   (function() {
     var canvas = document.getElementById("contact-cloud-canvas-REMOVED");
